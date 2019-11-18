@@ -5,56 +5,13 @@
     <Header></Header>
     <view-box ref="viewBox">
       <tab bar-active-color="#668599" active-color="#000000">
-            <tab-item selected >赛程</tab-item>
-            <tab-item @on-item-click="onClick_team_ranking">球队排名</tab-item>
-            <tab-item @on-item-click="onClick_player_ranking">球员排名</tab-item>
+            <tab-item  @on-item-click="onClick_schedule">赛程</tab-item>
+            <tab-item  @on-item-click="onClick_team_ranking">球队排名</tab-item>
+            <tab-item selected >球员排名</tab-item>
         </tab> 
-      <div :style="home_panel_class">
-        <div v-for="item_all in all_list">
-        <p>{{item_all.time}}</p>
-        <div v-for="item in item_all.match_list">
-      
-      <card >
-
-        <div slot="content" >
-          <div>
-            <grid class="match_grid_class">
-              <div class="match_class " >
-                <grid-item class="match_grid_item_class_p" :style="match_grid_item_style_p">
-                  <p style="color:#FF0000;font-weight:bold;font-style:oblique">{{item.p}}</p>
-                </grid-item>
-                <grid-item class="match_grid_item_class_img" :style="match_grid_item_style_img">
-                  <img :src="item.img"  class="img_class">
-                </grid-item>
-                <grid-item class="match_grid_item_class_score" :style="match_grid_item_style_score">
-                  <p class="score_class" style="color:#000000;font-weight:bold;">{{item.score}}</p>
-                </grid-item>
-                <grid-item class="match_grid_item_class_message" :style="match_grid_item_style_message">
-                  <p style="color:#000000;">{{item.message}}</p>
-                </grid-item>
-              </div>
-             
-              <div class="match_class " >
-                <grid-item :style="match_grid_item_style_p">
-                  <p style="color:#FF0000;font-weight:bold;font-style:oblique">{{item.p2}}</p>
-                </grid-item>
-                <grid-item :style="match_grid_item_style_img">
-                  <img :src="item.img2"  class="img_class">
-                </grid-item>
-                <grid-item :style="match_grid_item_style_score">
-                  <p class="score_class" style="color:#000000;font-weight:bold;">{{item.score}}</p>
-                </grid-item>
-                <grid-item :style="match_grid_item_style_message">
-                  <p style="color:#C0C0C0">{{item.message2}}</p>
-                </grid-item>
-              </div>
-            </grid>
-          </div>
-        </div>
-      </card>
-    </div>
-    </div>
-  </div>
+     <p>球员排名</p>
+    
+ 
     </view-box>
    <Footer></Footer>
  </div>
@@ -355,25 +312,25 @@ import Header from '@/components/Header.vue'
             }
      },
      methods: {
+       onClick_schedule(index) {
+          this.$router.push({name:"match"})
+       },
        onClick_team_ranking(index) {
           this.$router.push({name:"match_team_ranking"})
        },
-       onClick_player_ranking(index) {
-          this.$router.push({name:"match_player_ranking"})
-       },
-      
+       
        setHeight() {
         this.home_panel_class.height = window.innerHeight - 96 - 44 + "px"
         console.log(this.routerViewClass)
       },
       swiperleft: function () {  //左划切换到搜索页
-        
-           // this.$router.push({'path':'/search'});
-           this.$router.push({name:"match_team_ranking"})
+        this.$router.push({name:"more"})
+           // this.$router.push({'path':'/match_team_ranking'});
         },
       swiperright: function () { //右滑切换球队排名页
-        this.$router.push({name:"search"})
-          //this.$router.push({'path':'/match_team_ranking'});
+        
+        this.$router.push({name:"match_team_ranking"})
+          //this.$router.push({'path':'/more'});
       }
      },
      mounted() {

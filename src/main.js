@@ -8,8 +8,13 @@ import router from './router'
 import Home from './view/home.vue'
 import store from './store/index.js'
 import Vuex from 'vuex'
+import  VueTouch from 'vue-touch'
 Vue.use(Vuex)
 
+Vue.use(VueTouch,{name:'v-touch'})
+VueTouch.config.swipe = {
+  threshold:50  //设置左右滑动的距离
+}
 
 FastClick.attach(document.body)
 

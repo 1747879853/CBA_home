@@ -1,21 +1,21 @@
 <template>
   
     <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper" :swipe-options="{direction: 'horizontal'}">
-        <div>
+      <div>
     <Header></Header>
     <view-box ref="viewBox">
 
         <tab bar-active-color="#668599" active-color="#000000">
-            <tab-item  selected >推荐</tab-item>
-            <tab-item  @on-item-click="onClick_follow">关注</tab-item>
+            <tab-item @on-item-click="onClick_recommend">推荐</tab-item>
+            <tab-item selected >关注</tab-item>
             
             <tab-item @on-item-click="onClick_hot">热榜</tab-item>
         </tab>
-        <p>推荐页面</p>
+        <p>关注页面啊</p>
     </view-box>
    <Footer></Footer>
-</div>
-</v-touch>
+ </div>
+ </v-touch>
  
 </template>
 <style>
@@ -47,22 +47,20 @@ import Header from '@/components/Header.vue'
             }
      },
      methods: {
-        onClick_follow(index) {
-            this.$router.push({name:"forum_follow"})
-            //this.$router.push({'path':'/forum_follow'});
-            console.log("111")
+
+        onClick_recommend() {
+          this.$router.push({name:"forum"})
         },
-        onClick_hot(index) {
+        onClick_hot() {
+          this.$router.push({name:"forum_hotspot"})
+        },
+        swiperleft: function () {  //左划切换到推荐页面
             this.$router.push({name:"forum_hotspot"})
-        },
-        swiperleft: function () {  //左划切换到首页
-           this.$router.push({name:"forum_follow"})
-            //this.$router.push({'path':'/'});
-        },
-        swiperright: function () { //右滑切换关注页
             
-             this.$router.push({name:"home"})
-            //this.$router.push({'path':'/forum_follow'});
+        },
+        swiperright: function () { //右滑切换热点页
+            this.$router.push({name:"forum"})
+            
         }
      },
     }

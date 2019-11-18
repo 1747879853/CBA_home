@@ -1,12 +1,13 @@
 <template>
-  <div>
-    
+  
+    <v-touch v-on:swipeleft="swiperleft" class="wrapper" :swipe-options="{direction: 'horizontal'}">
+      <div>
       <Header></Header>
       <home-grid></home-grid>
    <Footer></Footer>
-   
-
-  </div>
+   </div>
+</v-touch>
+  
 </template>
 
 <script>
@@ -32,6 +33,15 @@ export default {
       // preserves its current state and we are modifying
       // its initial state.
       
+    }
+  },
+  methods: {
+   /* swiperleft: function () {  //左划切换到goods页
+      this.$router.push({'path':'/goods'});
+    },*/
+    swiperleft: function () { //右滑切换到论坛页
+      //this.$router.push({'path':'/forum'});
+      this.$router.push({name:"forum"})
     }
   }
 }

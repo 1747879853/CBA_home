@@ -18,7 +18,7 @@
       <span slot="label">赛事</span>
     </tabbar-item>
   
-    <tabbar-item link="">
+    <tabbar-item link="/more">
       <img slot="icon" src="../assets/more.png">
       <span slot="label">更多</span>
     </tabbar-item>

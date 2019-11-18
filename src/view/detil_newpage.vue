@@ -1,5 +1,5 @@
 <template>
-<div>
+
     <view-box ref="viewBox">
         <x-header :left-options="{backText: ''}" style="background-color:#CC0000;">CBA新闻</x-header>
         <div class="main">
@@ -13,7 +13,7 @@
 
     </view-box>
 
-</div>
+
 </template>
 <style>
 .ximg-demo {
