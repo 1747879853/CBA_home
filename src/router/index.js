@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import home from '@/view/home'
+import routes from './routers'
+import store from '@/store'
 
 Vue.use(Router)
-
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: home
-    }
-  ]
+const router = new Router({
+  routes
 })
+const LOGIN_PAGE_NAME = 'login'
+
+
+export default router

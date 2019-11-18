@@ -1,0 +1,1 @@
+//scp -r static root@47.104.69.139:/usr/local/tomcat9/webapps/cba
