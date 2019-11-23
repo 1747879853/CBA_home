@@ -18,7 +18,7 @@ html, body {
 }
 </style>
 <script>
-import {  Search, Alert  } from 'vux'
+import {  Search, Alert,Flexbox, FlexboxItem  } from 'vux'
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
     export default{
