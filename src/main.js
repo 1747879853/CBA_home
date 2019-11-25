@@ -9,7 +9,13 @@ import Home from './view/home.vue'
 import store from './store/index.js'
 import Vuex from 'vuex'
 import  VueTouch from 'vue-touch'
+import axios from 'axios'
 Vue.use(Vuex)
+Vue.prototype.$axios = axios
+ if (process.env.NODE_ENV !== 'production') require('@/mock')
+//main.js
+let homeScrollTop = 0;
+Vue.prototype.$homeScroll = homeScrollTop;
 
 Vue.use(VueTouch,{name:'v-touch'})
 VueTouch.config.swipe = {

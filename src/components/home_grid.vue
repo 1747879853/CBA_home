@@ -1,7 +1,7 @@
 <template>
   <div >
     <div :style="home_panel_class">
-      <div class="swiper_style">
+      <div class="swiper_style" id="home">
         <swiper :list="auto_swiper" auto style="width:95%;margin:5px 5px 5px 5px;height:150px"  dots-class="custom-bottom" dots-position="center" show-desc-mask>
         </swiper>
       </div>
@@ -122,12 +122,31 @@ import { mapMutations } from 'vuex'
             }
             }
      },
+    activated (){
+  //this.$nextTick()异步执行dom刷新
+      this.$nextTick(() => {
+        console.log(this.$homeScroll);
+        window.scrollTo(0, this.$homeScroll);
+      })
+    },
+  //离开路由时
+    
      methods: {
       
       ...mapMutations(['setNowpageinfo']),
       onImgError (item, $event) {
         console.log(item, $event)
       },
+      beforeRouteLeave(){
+      var home = document.getElementById("home");
+      //全局变量homeScroll默认为0 离开页面时 记录当前的页面滚动值
+      var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+      this.$homeScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      //需要执行next函数 否则不起作用
+      console.log(this.$homeScroll)
+      console.log($("home").scrollTop())
+      
+    },
       setHeight() {
         this.home_panel_class.height = window.innerHeight - 96 + "px"
         console.log(this.routerViewClass)
@@ -135,6 +154,7 @@ import { mapMutations } from 'vuex'
       onclick_newpage(item){
         console.log(item)
         this.setNowpageinfo(item.desc,item.src)
+        this.beforeRouteLeave()
         this.$router.push({name:"detil_newpage"})
       }
 

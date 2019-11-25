@@ -8,7 +8,7 @@
                 <x-img :src="src"  :webp-src="`${src}?type=webp`" @on-success="success" @on-error="error" :style="img_class" error-class="ximg-error" :offset="-100" container="#vux_view_box_body"></x-img>
             </div>
             <p>{{content}}</p>
-             <panel   :list="panel_list" type="4" @on-click-item="onclick_newpage" ></panel>
+            
         </div>
 
     </view-box>
@@ -46,7 +46,7 @@ import {  Flexbox, FlexboxItem, XHeader, XButton, XImg, ViewBox, Panel } from 'v
             return{
               value:'',
               title:'',
-                src:'/cba/static/newpages/1.png',
+                src:'/static/newpages/1.png',
                 img_class: {
                 height: "auto",
                 width:"100%"

@@ -1,35 +1,37 @@
-
-    
 <template>
-    <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper" :swipe-options="{direction: 'horizontal'}">
-      <div>
-    <Header></Header>
-    <tab bar-active-color="#668599" active-color="#000000">
-          <tab-item  @on-item-click="onClick_schedule">赛程</tab-item>
-          <tab-item selected >球队排名</tab-item>
-          <tab-item @on-item-click="onClick_player_ranking">球员排名</tab-item>
-    </tab> 
-    <div class="content">      
-      <div class="left_class">
-        <div ref="wrapper">
-          <ul>
-            <li v-for="item in left">
-              <span class="text">
-                {{item.name}}
-              </span>
-            </li>
-          </ul>  
-        </div>
-      </div>
-            <div ref="right">
-                <div v-for="item_all in all_list">
+	<v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper" :swipe-options="{direction: 'horizontal'}">
+     
+	    <Header></Header>
+	    <tab bar-active-color="#668599" active-color="#000000">
+	          <tab-item  @on-item-click="onClick_schedule">赛程</tab-item>
+	          <tab-item selected >球队排名</tab-item>
+	          <tab-item @on-item-click="onClick_player_ranking">球员排名</tab-item>
+	    </tab> 
+		<div class="match_team">
+			<div class="menu-wrapper">
+				<div class="content">      
+			      <div class="left_class">
+			        <div ref="wrapper">
+			          <ul>
+			            <li v-for="item in left">
+			              <span class="text" style="background: #EEEEEE;height:30px">
+			                {{item.name}}
+			              </span>
+			            </li>
+			          </ul>  
+			        </div>
+			      </div>
+			  </div>
+			</div>
+			<div calss="team-wrapper" style="width:100%;" ref="right">
+				<div v-for="item_all in all_list">
                   <span>{{item_all.t1}}</span><span>{{item_all.t2}}</span><span>{{item_all.t3}}</span>
                     <div v-for="item in item_all.match_list">
                       <card >
                         <div slot="content" >
                           <div>
                             <grid class="match_grid_class">
-                              <div class="match_class " >
+                              <div class="match_class" >
                                 <grid-item class="match_grid_item_class_img" :style="match_grid_item_style_img">
                                   <img :src="item.img"  class="img_class">
                                 </grid-item>
@@ -49,90 +51,68 @@
                       </card>
                     </div>
                   </div>
-            </div>
-         
-    </div>
-   <Footer></Footer>
- </div>
- </v-touch>
- 
+			</div>
+		</div>
+		<Footer></Footer>
+	</v-touch>
 </template>
-<style  scoped>
-
-.left_class {
-  padding: 0px 5px;
-}
-.match_grid_class /deep/ .weui-grid {
-  padding: 0px 5px;
-}
-.match_class {
-  display: flex;
-}
-.score_class {
-  }
-.img_class {
-  
-   height: 30px;
-   width: 30px;
-}
-html, body {
-  height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-}
-.flex-demo {
-  text-align: center;
-   
-}
-</style>
-<script>
-import { ViewBox, Tab, TabItem,Panel,Grid, GridItem, Divider,Card ,Flexbox, FlexboxItem } from 'vux'
+<script type="text/javascript">
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import BScroll from 'better-scroll'
-var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-    export default{
-     name: 'Match',
-     components: {
+import {get_team_ranking_data} from '@/api/user.js'
+import {Tab, TabItem,Grid, GridItem,Card} from 'vux'
+export default {
+	components: {
         Header,
         Footer,
-        ViewBox,
-        Tab, 
+       	Tab, 
         TabItem,
-        Panel,
         Grid,
         GridItem,
-        Divider,
-        Card,
-        Flexbox, 
-        FlexboxItem,
-        Card
-       
-     },
-     data(){
-            return{
-             left:[
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-
-             ],
-              all_list:[
+       	Card
+    },
+	data(){
+		return{
+			left:[
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+				{"name":"三分得分"},
+			],
+			all_list:[
                 {
                   t1:"球队",
                   t2:"胜-负",
@@ -274,10 +254,6 @@ var scrollTop = document.documentElement.scrollTop || window.pageYOffset || docu
                   ]
                 }
               ],
-              match_list:[
-              
-              ],
-              
               match_grid_item_style_data1:{
                 width:"25%"
               },
@@ -290,24 +266,9 @@ var scrollTop = document.documentElement.scrollTop || window.pageYOffset || docu
               match_grid_item_style_name:{
                 width:"25%"
               },
-              list: [{
-                src:"/static/newpages/1.png",
-                //fallbackSrc: 'http://placeholder.qiniudn.com/60x60/3cc51f/ffffff',
-                
-                desc: '80 ',
-                
-              }, 
-              {
-                src:"/static/newpages/2.png",
-                
-                desc: '100',
-                
-                 
-              }],
-              
-            }
-     },
-     methods: {
+		}
+	},
+	methods: {
         _initBScroll() {
           this.meunScroll = new BScroll(this.$refs.wrapper,{})
           this.rightScroll = new BScroll(this.$refs.right,{})
@@ -330,24 +291,50 @@ var scrollTop = document.documentElement.scrollTop || window.pageYOffset || docu
        this.$router.push({name:"match"})
           //this.$router.push({'path':'/match'});
       }
-     },
-     mounted() {
-      this.$nextTick(()=>{
-        this._initBScroll()
-      })
-        
-    },
-    watch: {
-      searchgoods(){
-      //监听数据
-      this.$nextTick(() =>{
-        //左右两边滚动
-      
-
-      })
-    }
-  }
-
-  }
- 
+  },
+	mounted() {
+		get_team_ranking_data()
+		.then(res => {
+			console.log(res.data)
+		})
+		.catch(err => {
+			console.log(err)
+		})
+		setTimeout(() =>{
+			this.$nextTick(()=>{
+				this._initBScroll()
+			})
+		},1000);
+	},
+}
 </script>
+<style scoped>
+.match_team {
+	position:absolute;
+	display: flex;
+	top: 90px;
+	bottom: 50px;
+	width: 100%;
+	overflow: hidden;
+
+}
+.menu-wrapper{
+	flex: 0 0 80px;
+	width: 80px;
+	background: #f3f57;
+}
+.team-wrapper {
+	width: 100%;
+}
+.match_grid_class /deep/ .weui-grid {
+  padding: 0px 5px;
+}
+.match_class {
+  display: flex;
+}
+.img_class {
+  
+   height: 30px;
+   width: 30px;
+}
+</style>

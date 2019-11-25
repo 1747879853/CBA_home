@@ -45,7 +45,7 @@ export default [
   {
         path: '/match_team_ranking', //赛事-球队排名
         name: 'match_team_ranking',
-        component: () => import('@/view/match_team_ranking.vue')   
+        component: () => import('@/view/match_team_ranking_new.vue')   
   },
   {
         path: '/more', //更多
