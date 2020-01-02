@@ -51,6 +51,11 @@ export default [
         path: '/more', //更多
         name: 'more',
         component: () => import('@/view/more.vue')   
+  },
+  {
+        path: '/match_detail', //赛程详细
+        name: 'match_detail',
+        component: () => import('@/view/match_detail.vue')   
   }
   
 ]

@@ -13,10 +13,6 @@ import axios from 'axios'
 Vue.use(Vuex)
 Vue.prototype.$axios = axios
  if (process.env.NODE_ENV !== 'production') require('@/mock')
-//main.js
-let homeScrollTop = 0;
-Vue.prototype.$homeScroll = homeScrollTop;
-
 Vue.use(VueTouch,{name:'v-touch'})
 VueTouch.config.swipe = {
   threshold:50  //设置左右滑动的距离

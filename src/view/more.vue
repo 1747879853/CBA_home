@@ -3,8 +3,8 @@
     <v-touch v-on:swiperight="swiperright"  class="wrapper" :swipe-options="{direction: 'horizontal'}">
       <div>
     <Header></Header>
-   <p>更多页面</p>
-    
+   
+    <recent-record></recent-record>
    <Footer></Footer>
  </div>
  </v-touch>
@@ -21,13 +21,15 @@ html, body {
 import {  Search, Alert,Flexbox, FlexboxItem  } from 'vux'
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
+import recentRecord from '@/components/recent_record.vue'
     export default{
      name: 'Search1',
      components: {
         Search,
         Footer,
         Alert,
-        Header
+        Header,
+        recentRecord
      },
      data(){
             return{
