@@ -349,7 +349,8 @@ export default {
       console.log(err)
     })
       this.match_id = this.$store.state.user.match_detail_id
-  }
+  },
+ 
 }
 </script>
 

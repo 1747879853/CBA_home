@@ -229,9 +229,17 @@ export default {
                     	if(this.activeIndex == 5) {
                     		self.active = 1
                     	}
+                    	console.log("现在的页面")
+                    	console.log(this.activeIndex)
+                    	console.log("store")
+                    	console.log(self.$store.state.user.homeIndex)
+                      self.$store.state.user.homeIndex = this.activeIndex //切换结束告诉vuex是第几个页面，进而控制背景颜色变化
                       console.log(this.activeIndex);//切换结束时，告诉我现在是第几个slide
                       console.log("tab")
-                      console.log(self.activeTab)
+                      console.log(this.activeIndex)
+                      if (this.activeIndex!=0) {
+							 self.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
+						}
                      
                     },
                 },
@@ -379,7 +387,11 @@ export default {
 	      this.content_style.height = window.innerHeight - 101.5 + "px"
 	    },
 		onChange(index) {
-			if (this.flag == false) {
+			console.log("sdfsadfsadfasdf")
+			console.log(this.$store.state.user.homeIndex)
+			console.log("sss")
+			
+			if (this.flag == false&&this.$store.state.user.homeIndex==0) {
 				console.log(this.flag)
 	        switch(index) {
 	          case 0:
@@ -461,10 +473,12 @@ export default {
       this.sethomeIndex(0)
     })
   },
-  watch: {
-    '$route'() {
 
-      //this.$destroy('VideoPlayer')
+ watch: {
+    '$route'() {
+      if(this.$store.state.user.homeIndex!=0){
+        this.color_bac='background-image: linear-gradient(to left, #BDBBBE 0%, #9D9EA3 100%), radial-gradient(88% 271%, rgba(255, 255, 255, 0.25) 0%, rgba(254, 254, 254, 0.25) 1%, rgba(0, 0, 0, 0.25) 100%), radial-gradient(50% 100%, rgba(255, 255, 255, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%); background-blend-mode: normal, lighten, soft-light;'
+      }
     }
   }
   // watch: {

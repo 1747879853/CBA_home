@@ -642,6 +642,7 @@ import _ from 'lodash'
 import recentRecord from '@/components/recent_record.vue'
 import BScroll from 'better-scroll'
 import messageHis from '@/components/message_his.vue'
+import { mapMutations } from 'vuex'
 export default {
   components: {
     Header,
@@ -760,6 +761,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['sethomeIndex']),
      personScroll() {
       // 默认有六个li子元素，每个子元素的宽度为120px
       let width = 13 * 50;
@@ -848,7 +850,8 @@ export default {
         this.home_panel_class_video.height = window.innerHeight -289.6+ "px"
     },
     return_last() {
-      this.$router.push({name:"match"})
+      this.sethomeIndex(1)
+      this.$router.push({name:"home"})
     },
     onItemClick_video() {
       this.show_guess = false
@@ -867,8 +870,8 @@ export default {
     },
     swiperight: function () {  
       if (this.show_data_analysis) {
-        this.$router.push({name:"match"})
-        console.log(this.show_video)
+        this.sethomeIndex(1)
+      this.$router.push({name:"home"})
       }else if(this.show_video) {
         this.onItemClick_data()
         console.log(this.show_video)
