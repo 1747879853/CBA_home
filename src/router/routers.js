@@ -1,4 +1,4 @@
-import Main from '@/view/home.vue'
+import Main from '@/view/home_new.vue'
 export default [
   
   {
@@ -50,12 +50,16 @@ export default [
   {
         path: '/more', //更多
         name: 'more',
-        component: () => import('@/view/more.vue')   
+        component: () => import('@/components/tabs.vue')   
   },
   {
         path: '/match_detail', //赛程详细
         name: 'match_detail',
         component: () => import('@/view/match_detail.vue')   
+  },
+  {
+        path: '/match_detail_finish', //赛程详细
+        name: 'match_detail_finish',
+        component: () => import('@/view/match_detail_finish.vue')   
   }
-  
 ]

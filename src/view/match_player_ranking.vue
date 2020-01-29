@@ -3,8 +3,8 @@
     <Header></Header>
     <tab bar-active-color="#668599" active-color="#000000">
       <tab-item  @on-item-click="onClick_schedule">赛程</tab-item>
-      <tab-item selected >球队排名</tab-item>
-      <tab-item @on-item-click="onClick_player_ranking">球员排名</tab-item>
+      <tab-item  >球队排名</tab-item>
+      <tab-item selected @on-item-click="onClick_player_ranking">球员排名</tab-item>
     </tab> 
     <div class="match_team">
       <div class="menu-wrapper" ref="wrapper">     
@@ -106,9 +106,13 @@ export default {
     }
   },
   methods: {
+    setHeight() {
+        this.home_panel_class.height = window.innerHeight - 96 - 44 + "px"
+        console.log(this.routerViewClass)
+      },
     _initBScroll() {
       this.meunScroll = new BScroll(this.$refs.wrapper,{
-        click: true
+        click: true,
       })
       this.rightScroll = new BScroll(this.$refs.right,{
         probeType: 3
@@ -140,11 +144,11 @@ export default {
       this.$router.push({name:"match_player_ranking"})
     },
     swiperleft: function () {  //左划切换到搜索页
-      this.$router.push({name:"match_player_ranking"})
+      this.$router.push({name:"more"})
       //this.$router.push({'path':'/match_player_ranking'});
     },
     swiperright: function () { //右滑切换球队排名页
-      this.$router.push({name:"match"})
+      this.$router.push({name:"match_team_ranking"})
       //this.$router.push({'path':'/match'});
     }
   },

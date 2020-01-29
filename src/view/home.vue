@@ -1,5 +1,4 @@
 <template>
-  
     <v-touch v-on:swipeleft="swiperleft" class="wrapper" :swipe-options="{direction: 'horizontal'}">
       <div>
       <Header></Header>
@@ -13,7 +12,6 @@
    <Footer></Footer>
    </div>
 </v-touch>
-  
 </template>
 
 <script>
@@ -75,7 +73,7 @@ export default {
         })
         this.$nextTick(()  =>  {
             this._initBScroll()
-            })
+        })
   }
 }
 </script>

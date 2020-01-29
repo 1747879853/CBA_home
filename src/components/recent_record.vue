@@ -2,7 +2,6 @@
   <div >
     <div class="start">
       <span  class="winOrfalse" :class="{leftWinOrfalse:leftWinOrfalse=='负'}">{{leftWinOrfalse}}</span>
-
       <span style="font-weight: bold;" class="leftScore" :class="{'changeColor':leftScore < rightScore}">{{leftScore}}</span>
       <span style="font-weight: bold;" class="_">-</span>
       <span style="font-weight: bold;" class="right_score" :class="{'changeColor':leftScore > rightScore}">{{rightScore}}</span>
@@ -12,27 +11,21 @@
       <span class="teams">{{leftTeam}}VS{{rightTeam}}</span>
       <span class="main_" v-if="show==1">{{master}}</span>
     </div>
-  
 </div>
 </template>
 <script>
-
 export default{
   name: 'recent_record',
   props: ['leftWinOrfalse','leftScore','rightScore','leftTeam','rightTeam','time','show','master'],
   components: {
-    
   },
   data() {
     return{
-      
     }
   },
   methods: {
-    
   },
   mounted() {
-    
   }
 }
 </script>
@@ -55,7 +48,7 @@ export default{
   font-size: 10px;
   border-radius: 50%;
   position: absolute;
-  left: 121px;
+  left: 123px;
   top: 47px;
 }
 .main1 {
@@ -71,7 +64,7 @@ export default{
   font-size: 10px;
   border-radius: 50%;
   position: absolute;
-  left: 50px;
+  left: 48px;
   top: 47px;
 }
 .left_winOrfalse {

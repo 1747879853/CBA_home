@@ -1,53 +1,77 @@
 <template>
-  <v-touch v-on:swipeleft="swiperleft" :swipe-options="{direction: 'horizontal'}">
+  <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperight" :swipe-options="{direction: 'horizontal'}">
     
         <div class="background_top" v-if="show1">
-            <img slot="icon" src="/static/tim/1.png" style="height: 30%;" class="icon1">
+            <img src="http://47.94.93.50:8080/dist/static/return.png" class="return" @click="return_last()">
+            <img slot="icon" :src="team1_picture" style="height: 30%;" class="icon1">
             <p style="color: white;" class="left_text">四川(主)</p>
             <p style="color: white;" class="match_time1">开赛:12月31日 19:35</p>
-            <img slot="icon" src="/static/tim/2.png" style="height: 30%;" class="icon2">
+            <img slot="icon" :src="team2_picture" style="height: 30%;" class="icon2">
             <p style="color: white;" class="right_text">北京(客)</p>
+            <div v-if="play_video.num==3">
+              <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 12%;">
+              <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 18%;text-decoration:underline">
+                <a :href="play_video.address1" target="_blank">{{play_video.name1}}</a>
+                </span>  
+              <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 39%;">
+              <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 45%;text-decoration:underline">
+                <a :href="play_video.address2" target="_blank">{{play_video.name2}}</a>
+              </span> 
+              <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 67%;">
+              <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 73%;text-decoration:underline">
+                <a :href="play_video.address3">{{play_video.name3}}</a>
+              </span>  
+            </div>
+            <div v-if="play_video.num==2">
+              <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 26%;">
+              <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 32%;text-decoration:underline">
+                <a href="play_video.address1" target="_blank">{{play_video.name1}}</a>
+              </span>  
+              <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 52%;">
+              <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 58%;text-decoration:underline">
+                <a href="play_video.address2" target="_blank">{{play_video.name2}}</a>
+              </span> 
+            </div>
+            
         </div>
         <div class="background_top2" v-if="show2">
 
-            <img slot="icon" src="/static/tim/1.png" style="height: 30%;width: 15%;" class="icon1">
+            <img slot="icon" src="http://47.94.93.50:8080/dist/static/tim/1.png" style="height: 30%;width: 15%;" class="icon1">
             <p style="color: white;" class="left_text">{{team.team1}}(主)</p>
             <p style="color: white;" class="result_score" >108-124</p>
             <p style="color: white;" class="match_time">已结束</p>
-            <img slot="icon" src="/static/tim/2.png" style="height: 30%;width: 15%;" class="icon2">
+            <img slot="icon" src="http://47.94.93.50:8080/dist/static/tim/2.png" style="height: 30%;width: 15%;" class="icon2">
             <p style="color: white;" class="right_text">{{team.team2}}(客)</p>
         </div>
         <div class="content" >
           <tab class="content_tab" default-color="#888888" active-color="#000000" bar-active-color="#DD0000">
-            <tab-item selected @on-item-click="onItemClick_data()">数据分析</tab-item>
-            <tab-item  @on-item-click="onItemClick_video()">留言助威</tab-item>
-            <tab-item @on-item-click="onItemClick_guess()">战果竞猜</tab-item>
+            <tab-item  @on-item-click="onItemClick_data()" :selected="show_data_analysis">数据分析</tab-item>
+            <tab-item  @on-item-click="onItemClick_video()" :selected="show_video">留言助威</tab-item>
+            <tab-item @on-item-click="onItemClick_guess()" :selected="show_guess">战果竞猜</tab-item>
           </tab>
-
-          <br>
-          <div id="data" v-show="show_data_analysis">
-            <div class="data_analysis" >
+          <div  v-show="show_data_analysis" :style="home_panel_class_data_analysis" ref="data_analysis" class="data_analysis_wrepper">
+            <div class="data_analysis">
               赛季最佳球员
               <br>
-              <img src="/static/tim/1.png" class="data_analysis_team_icon1">
+              <img :src="team1_picture" class="data_analysis_team_icon1">
               <span class="data_analysis_team_test1" style="color:#CC0000">{{team.team1}}</span> 
-              <img src="/static/tim/2.png" class="data_analysis_team_icon2">
+              <img :src="team1_picture" class="data_analysis_team_icon2">
               <span class="data_analysis_team_test2" style="color:#000099">{{team.team2}}</span> 
               <br>
               <br>
-              <x-table>
+              <x-table full-bordered :content-bordered="false" :cell-bordered="false" class="best_player">
                 <tbody>
                   <div v-for="item in data_list">
                     <tr>
                       <td style="width:25%">
-                        <img src="/static/man.jpg" style="width:35%;margin: 20px 0 0 0;">
+                        <img src="http://47.94.93.50:8080/dist/static/man.jpg" style="width:35%;margin: 20px 0 0 0;">
                         <br>
                       </td>
                       <td style="width:19%"><p style="color: #CC0000;font-weight:bold">{{item.score1}}<p></p></td>
                       <td style="width:12%">{{item.t}}</td>
                       <td style="width:19%"><span style="color: #000099;font-weight:bold">{{item.score2}}</span></td>
                       <td style="width:25%">
-                        <img src="/static/man.jpg" style="width:35%">
+                        <img src="http://47.94.93.50:8080/dist/static/man.jpg" style="width:35%">
                       </td>
                     </tr>
                     <tr>
@@ -64,7 +88,6 @@
                   </div>
                 </tbody>
               </x-table>
-            </div>
             <br>
             <hr />
             <br>
@@ -74,38 +97,34 @@
             <br>
             最近战绩
             <div class="recent_">
-              <img src="/static/tim/1.png" class="data_recent_team_icon1">
+              <img src="http://47.94.93.50:8080/dist/static/tim/1.png" class="data_recent_team_icon1">
               <span class="data_recent_team1" style="color:#CC0000">{{team.team1}}</span> 
-              <img src="/static/tim/2.png" class="data_recent_team_icon2">
+              <img src="http://47.94.93.50:8080/dist/static/tim/2.png" class="data_recent_team_icon2">
               <span class="data_recent_team2" style="color:#000099">{{team.team2}}</span> 
               <br>
               <br>
-              <x-table>
+              <x-table :full-bordered="false" :content-bordered="false" :cell-bordered="false" class="recent_record">
                 <tbody>
                   <tr>
                     <td>
-                      <x-table>
+                      <x-table :cell-bordered="false" :content-bordered="false" full-bordered>
                         <tbody>
-                          <div v-for="item in recent_data">
-                            <tr>
+                            <tr v-for="item in recent_data">
                               <td>
                                 <recent-record :leftWinOrfalse= "item.result" :leftScore="item.leftScore" :rightScore="item.rightScore" :leftTeam="item.leftTeam" :rightTeam="item.rightTeam" :time="item.time" :show="item.show" :master="item.master"></recent-record>
                               </td>
                             </tr>
-                          </div>
                         </tbody>
                       </x-table>
                     </td>
                     <td>
-                      <x-table>
+                      <x-table :cell-bordered="false" :content-bordered="false" full-bordered>
                         <tbody>
-                          <div v-for="item in recent_data">
-                            <tr>
+                            <tr v-for="item in recent_data">
                               <td>
                                 <recent-record :leftWinOrfalse= "item.result" :leftScore="item.leftScore" :rightScore="item.rightScore" :leftTeam="item.leftTeam" :rightTeam="item.rightTeam" :time="item.time" :show="item.show" :master="item.master"></recent-record>
                               </td>
                             </tr>
-                          </div>
                         </tbody>
                       </x-table>
                     </td>
@@ -118,7 +137,7 @@
             <br>
             <div>
               本赛季交战
-              <x-table :cell-bordered="false" :content-bordered="false" style="background-color:#fff;">
+              <x-table  style="background-color:#fff;">
                 <thead>
                   <tr style="background-color: #F7F7F7">
                     <th>时间</th>
@@ -141,16 +160,35 @@
             </div>
           </div>
         </div>
+        <div v-show="show_video">
+          <div  class="his_message" ref="message" :style="home_panel_class_video">
+            <ul>
+              <li>
+                <message-his v-for="(item,index) in message_his_data" :key="index" :message="item.message" :username="item.username" :img="item.img"></message-his>
+              </li>
+            </ul>>
+           
+        </div>  
+          <x-input  placeholder="我来助威..." style="position: absolute;top: 94%;">
+            <img slot="label" style="padding-right:10px;display:block;" src="static/input.png" width="24" height="24">
+          </x-input>
+        </div>
+        
+
+      </div>
   </v-touch>
 </template>
 <script>
-import { Tab, TabItem, XTable} from 'vux'
+import { Tab, TabItem, XTable, XInput } from 'vux'
+import { mapMutations } from 'vuex'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import { get_match_detail_analise_data } from '@/api/user.js'
 import F2 from '@antv/f2'
 import _ from 'lodash'
 import recentRecord from '@/components/recent_record.vue'
+import BScroll from 'better-scroll'
+import messageHis from '@/components/message_his.vue'
 export default {
   components: {
     Header,
@@ -158,7 +196,9 @@ export default {
     Tab,
     TabItem,
     XTable,
-    recentRecord
+    recentRecord,
+    messageHis,
+    XInput
   },
   data () {
     return {
@@ -172,10 +212,33 @@ export default {
       his_data: [],
       show_data_analysis: true,
       show_video:false,
-      show_guess:false
+      show_guess:false,
+      home_panel_class_data_analysis: {
+        height: ""
+      },
+      home_panel_class_video: {
+        height: ""
+      },
+      team1_picture:'',
+      team2_picture:'',
+      message_his_data:[],
+      play_video:{}
     }
   },
   methods: {
+    ...mapMutations(['sethomeIndex']),
+    _initBScroll() {
+      this.meunScroll = new BScroll(this.$refs.message,{})
+      this.data_analysis = new BScroll(this.$refs.data_analysis,{}) 
+    },
+    setHeight() {
+      this.home_panel_class_data_analysis.height = window.innerHeight -244  + "px"
+      this.home_panel_class_video.height = window.innerHeight -289.6+ "px"
+    },
+    return_last() {
+      this.sethomeIndex(1)
+      this.$router.push({name:"home"})
+    },
     initHisto() {
       const chart = new F2.Chart({
         id: 'container',
@@ -206,7 +269,6 @@ export default {
           legend.setItems(chart.getLegendItems().country);
         }
       });
-     
       chart.interval()
         .position('分数类型*分数')
         .color('name',function (name) {
@@ -214,7 +276,6 @@ export default {
               return '#CC0000'
             } else  
               return '#000099'
-            
           })
         .adjust({
           type: 'dodge',
@@ -237,12 +298,31 @@ export default {
       this.show_data_analysis = false
       this.show_guess = true
     },
-   /* swiperleft: function () {  //左划切换到goods页
-      this.$router.push({'path':'/goods'});
-    },*/
-    swiperleft: function () { //右滑切换到论坛页
+    swiperight: function () {  
+      this.sethomeIndex(1)
+      this.$router.push({name:"home"})
+      // if (this.show_data_analysis) {
+      //   this.$router.push({name:"match"})
+      //   console.log(this.show_video)
+      // }else if(this.show_video) {
+      //   this.onItemClick_data()
+      //   console.log(this.show_video)
+      // }else if(this.show_guess) {
+      //   this.onItemClick_video()
+      //   console.log(this.show_video)
+      // }
+    },
+    swiperleft: function () { 
+      this.sethomeIndex(1)
+      this.$router.push({name:"home"})
       //this.$router.push({'path':'/forum'});
-      this.$router.push({name:"forum"})
+      // if (this.show_data_analysis) {
+      //   this.onItemClick_video()
+      //   console.log("111")
+      // }else if(this.show_video) {
+      //   this.onItemClick_guess()
+      //   console.log("222")
+      // }
     }
   },
   mounted () {
@@ -254,7 +334,16 @@ export default {
       this.data = res.data.data
       this.recent_data = res.data.recent_data
       this.his_data = res.data.his_data
+      this.message_his_data = res.data.message_his_data
+      this.team1_picture = res.data.png.team_picture1
+      this.team2_picture = res.data.png.team_picture2
+      this.play_video = res.data.play_video
       this.initHisto()
+      this.$nextTick(()  =>  {
+        this.setHeight()
+        this._initBScroll()
+        console.log(this.meunScroll)
+      })
     })
     .catch(err => {
       console.log(err)
@@ -266,14 +355,14 @@ export default {
 
 <style>
 .background_top {
-  background-image: url('/static/matche_detail.png');
+  background-image: url('http://47.94.93.50:8080/dist/static/matche_detail.png');
   height: 200px;
   width: 100%;
   background-size: cover;
   position: relative;
 }
 .background_top2 {
-  background-image: url('/static/matche_detail.png');
+  background-image: url('http://47.94.93.50:8080/dist/static/matche_detail.png');
   height: 150px;
   width: 100%;
   background-size: cover;
@@ -282,19 +371,25 @@ export default {
 .team_icon {
  
 }
+.return {
+  width: 6%;
+  position: absolute;
+  left: 2%;
+  top: 4%;
+}
 .icon1 {
   height: 60%;
   position: absolute;
   left: 10%;
   width: 20%;
-  top: 35%;
+  top: 30%;
 }
 .icon2 {
   height: 60%;
   position: absolute;
   right: 10%;
   width: 20%;
-  top: 35%;
+  top: 30%;
 }
 .left_text {
   position: absolute;
@@ -330,6 +425,7 @@ export default {
 }
 .data_analysis {
   position: relative;
+  background: white;
 }
 .data_analysis_team_icon1 {
   width: 11%;
@@ -364,12 +460,12 @@ export default {
 .data_analysis_team_test1 {
   position: absolute;
   left: 15%;
-  top: 6%;
+  top: 2%;
 }
 .data_analysis_team_test2 {
   position: absolute;
   right: 16%;
-  top: 6%;
+  top: 2%;
 }
 .recent_ {
   position: relative;
@@ -377,4 +473,26 @@ export default {
 .iswin {
   color:#CC0000 
 }
+.his_message {
+  position: absolute;
+  overflow: hidden;
+}
+.data_analysis_wrepper {
+  position: absolute;
+  overflow: hidden;
+}
+.best_player::before {
+    border-left: 1px solid #FFF!important;
+    color: #FFF!important;
+}
+.recent_record::before {
+  border-left: 1px solid #FFF!important;
+    color: #FFF!important;
+}
+.vux-table td::before, .vux-table th::before {
+  border-bottom: 1px solid #FFF!important;
+  color: #FFF!important;
+}
+a:link {color: rgb(187, 187, 187)}
+a:visited {color: rgb(187, 187, 187)}
 </style>

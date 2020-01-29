@@ -17,7 +17,7 @@ export const getUserInfo = token => {
 }
 export const get_match_data = () => {
   return axios.request({
-    url: 'get_match_data',
+    url: 'http://47.94.93.50:8080/demo/teamSchdule',
     params: {},
     method: 'get'
   })
@@ -31,7 +31,14 @@ export const get_newpage_data = () => {
 }
 export const get_match_detail_analise_data = () => {
   return axios.request({
-    url: 'get_match_detail_analise_data',
+    url: 'http://47.94.93.50:8080/demo/playerdata',
+    params: {},
+    method: 'get'
+  })
+}
+export const get_match_finish_data = () => {
+  return axios.request({
+    url: 'get_match_finish_data',
     params: {},
     method: 'get'
   })

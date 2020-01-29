@@ -226,13 +226,120 @@ var his_data = [
           'score_customer': 95,
           'score_master': 111
         }]
+var message_his = [
+{
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！asdsdfasfasdfsadfsadfasdfasdf",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        },
+        {
+          'message': "加油加油加油加油加油加油加油加油！",
+          'img': '',
+          'username': '哔哩哔哩'
+        }]
 function fun() {
   return {
     data_list: data_list,
     team: team,
     data: data,
     recent_data: recent_data,
-    his_data: his_data
+    his_data: his_data,
+    message_his_data: message_his
   }
 }
 
