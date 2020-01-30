@@ -389,7 +389,7 @@ export default{
         this.$router.push({name:"match_detail_finish"})
       },
       setHeight() {
-        this.team_wrapper.height = window.innerHeight - 101.5 + "px"
+        this.team_wrapper.height = window.innerHeight - 151.5 + "px"
       },
       swiperleft: function () {  //左划切换到搜索页
         // this.$router.push({'path':'/search'});

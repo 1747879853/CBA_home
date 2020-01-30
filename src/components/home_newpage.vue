@@ -19,7 +19,7 @@
 				<van-tab title="赛程"></van-tab>
 				<van-tab title="球队榜"></van-tab>
 				<van-tab title="球员榜"></van-tab>
-				<van-tab title="推荐"></van-tab>
+				
 				<van-tab title="社区"></van-tab>
 	            </van-tab>
 	          </van-tabs>
@@ -110,11 +110,9 @@
     	<swiper-slide>
     		<p style="color:white;">这是球员榜</p>
     	</swiper-slide>
+    	
     	<swiper-slide>
-    		<p style="color:white;">这是推荐</p>
-    	</swiper-slide>
-    	<swiper-slide>
-    		<p style="color:white;">这是社区</p>
+    		<commu></commu>
     	</swiper-slide>
     	</swiper>
     	<van-tabbar v-model="active" @change="onChangeTab">
@@ -170,6 +168,7 @@ import homeContent from '@/components/home_content.vue'
 import BScroll from 'better-scroll'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import match from '@/view/match'
+import commu from '@/view/commu'
 import matchTeamRankingNew from '@/view/match_team_ranking_new.vue'
 import tabs from '@/components/tabs.vue'
 import { mapMutations } from 'vuex'
@@ -182,7 +181,8 @@ export default {
     	swiperSlide,
     	match,
     	matchTeamRankingNew,
-    	tabs
+    	tabs,
+    	commu
 	},
 	data () {
 		const self = this

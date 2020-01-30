@@ -61,5 +61,10 @@ export default [
         path: '/match_detail_finish', //赛程详细
         name: 'match_detail_finish',
         component: () => import('@/view/match_detail_finish.vue')   
+  },
+  {
+        path: '/commu', //赛程详细
+        name: 'commu',
+        component: () => import('@/view/commu.vue')   
   }
 ]
