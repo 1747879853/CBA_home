@@ -19,8 +19,8 @@
 				<van-tab title="赛程"></van-tab>
 				<van-tab title="球队榜"></van-tab>
 				<van-tab title="球员榜"></van-tab>
-				
 				<van-tab title="社区"></van-tab>
+				<van-tab title="我的"></van-tab>
 	            </van-tab>
 	          </van-tabs>
 	        </van-col>
@@ -34,7 +34,7 @@
 					    placeholder="请输入搜索关键词"
 					    show-action
 					    @search="onSearch"
-					   shape="round"
+					   	shape="round"
 					    background="transparent"
 					  />
 					</form>
@@ -82,16 +82,17 @@
 						finished-text="没有更多了"
 						
 						>
-			            	<div style="position:relative;height:100px;" v-for="item in newpage">
+			            	<div style="position:relative;height:100px;" v-for="item in newpage" @click="to_deil_newpage(item.match_id)">
 								<van-divider />
+
 								<img :src="item.img" style="width: 30%;position: absolute;right: 3%;">
-								<div style="width: 60%;position: absolute;right: 38%;top: -3%;">
+								<div style="width: 60%;position: absolute;right: 38%;top: 10%;">
 									<p style="text-align: left;">{{item.p}}</p>
 								</div>
 								<img src="http://47.94.93.50:8080/dist/static/comment.png" style="width: 4%;position: absolute;top: 81%;left: 3%;">
-								<p style="font-size: 81%;position: absolute;top: 77%;left: 8%;">{{item.comment}}</p>
+								<p style="font-size: 81%;position: absolute;top: 79%;left: 8%;">{{item.comment}}</p>
 								<img src="http://47.94.93.50:8080/dist/static/up.png" style="width: 4%;position: absolute;top: 80%;left: 18%;">
-								<p style="font-size: 81%;position: absolute;left: 23%;top: 77%;">{{item.up}}</p>
+								<p style="font-size: 81%;position: absolute;left: 23%;top: 79%;">{{item.up}}</p>
 							</div>   
 			        	</van-list>
 	        		</div>
@@ -109,10 +110,14 @@
     	</swiper-slide>
     	<swiper-slide>
     		<p style="color:white;">这是球员榜</p>
+    		<button @click="test()">tttt</button>
     	</swiper-slide>
-    	
+    		
     	<swiper-slide>
     		<commu></commu>
+    	</swiper-slide>
+    	<swiper-slide>
+    		<user></user>
     	</swiper-slide>
     	</swiper>
     	<van-tabbar v-model="active" @change="onChangeTab">
@@ -125,11 +130,11 @@
 		    >
 		  </van-tabbar-item>
 		 <van-tabbar-item info="">
-		    <span>社区</span>
+		    <span>赛事</span>
 		    <img
 		      slot="icon"
 		      :slot-scope="props"
-		      src="http://47.94.93.50:8080/dist/static/shequ.png"
+		      src="http://47.94.93.50:8080/dist/static/match.png"
 		    >
 		  </van-tabbar-item>
 		  <van-tabbar-item info="">
@@ -141,12 +146,13 @@
 		      style="width: 36px;height: 45px;margin-top: 6px;"
 		    >
 		  </van-tabbar-item>
+		  
 		  <van-tabbar-item info="">
-		    <span>赛事</span>
+		    <span>社区</span>
 		    <img
 		      slot="icon"
 		      :slot-scope="props"
-		      src="http://47.94.93.50:8080/dist/static/match.png"
+		      src="http://47.94.93.50:8080/dist/static/shequ.png"
 		    >
 		  </van-tabbar-item>
 		  <van-tabbar-item info="">
@@ -172,6 +178,8 @@ import commu from '@/view/commu'
 import matchTeamRankingNew from '@/view/match_team_ranking_new.vue'
 import tabs from '@/components/tabs.vue'
 import { mapMutations } from 'vuex'
+import { get_home_data} from '@/api/user.js'
+import user from '@/view/user.vue'
 export default {
 	name: '',
 	components: {
@@ -182,7 +190,8 @@ export default {
     	match,
     	matchTeamRankingNew,
     	tabs,
-    	commu
+    	commu,
+    	user
 	},
 	data () {
 		const self = this
@@ -208,7 +217,7 @@ export default {
 			},
 			scrollY:0,
 			swiperOption:{
-				touchRatio : 0.5,
+				touchRatio : 0.1,
 				observer:true,
 				observerParents:true,
 		        slidesPerView: 'auto',
@@ -221,13 +230,22 @@ export default {
                     	console.log('num')
                     	self.activeTab = this.activeIndex
                     	if(this.activeIndex == 0){
-                    		self.active = this.activeIndex
+                    		self.active = 0
                     	}
                     	if(this.activeIndex == 1) {
+                    		self.active = 1
+                    	}
+                    	if(this.activeIndex == 2) {
+                    		self.active = 2
+                    	}
+                    	if(this.activeIndex == 3){
+                    		self.active = 2
+                    	}
+                    	if(this.activeIndex == 4) {
                     		self.active = 3
                     	}
                     	if(this.activeIndex == 5) {
-                    		self.active = 1
+                    		self.active = 4
                     	}
                     	console.log("现在的页面")
                     	console.log(this.activeIndex)
@@ -251,47 +269,7 @@ export default {
 		        height:''
 		    },
 		    newpage:[
-		      {
-		        'img': "http://47.94.93.50:8080/dist/static/3.jpg",
-		        'p': '五佳球收割机！马上旋转铜锣烧转身打进',
-		        'up': 35,
-		        'comment': 154
-		      },{
-		        'img': "http://47.94.93.50:8080/dist/static/3.jpg",
-		        'p': '五佳球收割机！马上旋转铜锣烧转身打进',
-		        'up': 35,
-		        'comment': 154
-		      },{
-		        'img': "http://47.94.93.50:8080/dist/static/3.jpg",
-		        'p': '五佳球收割机！马上旋转铜锣烧转身打进',
-		        'up': 35,
-		        'comment': 154
-		      },{
-		        'img': "http://47.94.93.50:8080/dist/static/3.jpg",
-		        'p': '五佳球收割机！马上旋转铜锣烧转身打进',
-		        'up': 35,
-		        'comment': 154
-		      },{
-		        'img': "http://47.94.93.50:8080/dist/static/3.jpg",
-		        'p': '五佳球收割机！马上旋转铜锣烧转身打进',
-		        'up': 35,
-		        'comment': 154
-		      },{
-		        'img': "http://47.94.93.50:8080/dist/static/3.jpg",
-		        'p': '五佳球收割机！马上旋转铜锣烧转身打进',
-		        'up': 35,
-		        'comment': 154
-		      },{
-		        'img': "http://47.94.93.50:8080/dist/static/3.jpg",
-		        'p': '五佳球收割机！马上旋转铜锣烧转身打进',
-		        'up': 35,
-		        'comment': 154
-		      },{
-		        'img': "http://47.94.93.50:8080/dist/static/3.jpg",
-		        'p': '五佳球收割机！马上旋转铜锣烧转身打进',
-		        'up': 35,
-		        'comment': 154
-		      }
+		      
 		      ],
 		      images: [
 		        'http://47.94.93.50:8080/dist/static/b1.jpg',
@@ -341,24 +319,40 @@ export default {
 		}
 	},
 	methods: {
-		 ...mapMutations(['sethomeIndex']),
+		 ...mapMutations(['sethomeIndex','setnewId']),
+		 test() {
+		 	console.log(this.$store.state.user.userInfo)
+		 },
+		 to_deil_newpage(match_id) {
+		 	console.log("match_id")
+		 	console.log(match_id)
+		 	this.setnewId(match_id)
+		 	this.$router.push({name:"detil_newpage"})
+		 },
 		onChangeTab(index) {
-			if (index==0) {
+			if (index==0) { //首页
 				this.swiper.slideTo(0, 400, false) 
 				this.activeTab = 0
-				
+				this.flag = false
 			}
-			if (index == 1) {
+			if (index == 3) { // 社区
+				this.swiper.slideTo(4, 400, false) 
+				this.activeTab = 4
+				this.flag = true
+				this.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
+			}
+			if (index == 1) {//赛程
+				this.swiper.slideTo(1, 400, false) 
+				this.flag = true
+				this.activeTab = 1
+				this.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
+			}
+			if (index == 4) {//我的
 				this.swiper.slideTo(5, 400, false) 
+				this.flag = true
+				this.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
 				this.activeTab = 5
 				
-			}
-			if (index == 3) {
-				this.swiper.slideTo(1, 400, false) 
-				
-			}
-			if (index == 4) {
-				//this.activeTab = 5
 			}
 			
 		},
@@ -369,7 +363,7 @@ export default {
 		 _initBScroll() {
 	      this.meunScroll = new BScroll(this.$refs.content,{
 	        probeType: 3,
-	        startY: 1000
+	        click: true
 	      })
 	      console.log(this.meunScroll)
 	      console.log("sdfsadfasdfasdfasdfasdf")
@@ -429,24 +423,39 @@ export default {
 	    onclickTab(name,title) {
 	    	if(name==0){
 	    		this.swiper.slideTo(0, 400, false)
+	    		this.flag = false
+	    		this.active = 0
 	    	}
 	    	if(name==1){
 	    		this.swiper.slideTo(1, 400, false)
-	    		this.active = 3
+	    		this.active = 1
+	    		this.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
+	    		this.flag = true
 	    	}
 	    	if(name==2){
+	    		this.active = 2
 	    		this.swiper.slideTo(2, 400, false)
+	    		this.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
+	    		this.flag = true
 	    	}
 	    	if(name==3){
+	    		this.active = 2
 	    		this.swiper.slideTo(3, 400, false)
+	    		this.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
+	    		this.flag = true
 	    	}
 	    	if(name==4){
+	    		this.active = 3
 	    		this.swiper.slideTo(4, 400, false)
+	    		this.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
+	    		this.flag = true
 	    	}
-	    	if(name==5){
-	    		this.swiper.slideTo(5, 400, false)
-	    		this.active = 1
-	    	}
+	    	 if(name==5){
+	    	 	this.active = 4
+	    	 	this.swiper.slideTo(5, 400, false)
+	    	 	this.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
+	    		this.flag = true
+	    	 }
 	    	console.log(name)
 	    	//console.log(document.getElementById(name));
 	    },
@@ -460,18 +469,36 @@ export default {
 		}
 	},
 	mounted() {
-    this.$nextTick(()  =>  {
-      this.setHeight()
-      this. _initBScroll()
-      //this.active = this.$store.state.user.homeIndex+3
-      this.activeTab = this.$store.state.user.homeIndex
-      if(this.$store.state.user.homeIndex == 1){
-      	this.active = 3
-      }
-      this.swiper.slideTo(this.$store.state.user.homeIndex, 400, false)
-      console.log(this.$store.state.user.homeIndex)
-      this.sethomeIndex(0)
-    })
+		
+	 	get_home_data()
+	    .then(res => {
+	    	for(let i = 0;i < res.data[1].length;i++){
+	    		this.newpage.push({
+	    		'img': res.data[1][i].img,
+	    		'p':res.data[1][i].title,
+	    		'up':res.data[1][i].dianzan,
+	    		'comment': res.data[1][i].pinglun,
+	    		'match_id': res.data[1][i].match_id
+	    	})
+	    	}
+	    	
+			this.$nextTick(()  =>  {
+				this.setHeight()
+				this. _initBScroll()
+				//this.active = this.$store.state.user.homeIndex+3
+				this.activeTab = this.$store.state.user.homeIndex
+				if(this.$store.state.user.homeIndex == 1){
+					this.active = 3
+				}
+				this.swiper.slideTo(this.$store.state.user.homeIndex, 400, false)
+				console.log(this.$store.state.user.homeIndex)
+				this.sethomeIndex(0)
+			})
+	    })
+	    .catch(err => {
+	      console.log(err)
+	    })
+    
   },
 
  watch: {
@@ -524,5 +551,8 @@ export default {
 .content2 {
 	margin-top: 180%;
 	overflow: hidden;
+}
+.van-hairline--top-bottom::after, .van-hairline-unset--top-bottom::after {
+    border-width: 0px 0;
 }
 </style>

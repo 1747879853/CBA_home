@@ -115,7 +115,7 @@ export default {
         click: true,
       })
       this.rightScroll = new BScroll(this.$refs.right,{
-        probeType: 3
+        probeType: 3,click: true
       });
       this.rightScroll.on('scroll', (pos) => {
         this.scrollY = Math.abs(pos.y);

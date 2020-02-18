@@ -89,6 +89,7 @@ import { ViewBox, Tab, TabItem,Panel,Grid, GridItem, Divider,Card ,Flexbox, Flex
 import Footer from '@/components/Footer.vue'
 import Header from '@/components/Header.vue'
 import BScroll from 'better-scroll'
+import { get_teamrank_data } from '@/api/user.js'
 var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
     export default{
      name: 'Match',
@@ -111,25 +112,6 @@ var scrollTop = document.documentElement.scrollTop || window.pageYOffset || docu
      data(){
             return{
              left:[
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-             {"name":"三分得分"},
-
              ],
               all_list:[
                 {
@@ -308,8 +290,8 @@ var scrollTop = document.documentElement.scrollTop || window.pageYOffset || docu
      },
      methods: {
         _initBScroll() {
-          this.meunScroll = new BScroll(this.$refs.wrapper,{})
-          this.rightScroll = new BScroll(this.$refs.right,{})
+          this.meunScroll = new BScroll(this.$refs.wrapper,{click: true,})
+          this.rightScroll = new BScroll(this.$refs.right,{click: true,})
         },
        onClick_schedule() {
         this.$router.push({name:"match"})
@@ -331,9 +313,19 @@ var scrollTop = document.documentElement.scrollTop || window.pageYOffset || docu
       }
      },
      mounted() {
-      this.$nextTick(()=>{
-        this._initBScroll()
-      })
+      get_teamrank_data()
+        .then(res => {
+          this.left = res.data.left
+          
+          this.$nextTick(()=>{
+            this._initBScroll()
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      
+      
         
     },
     watch: {

@@ -4,32 +4,33 @@
         <div class="background_top" v-if="show1">
             <img src="http://47.94.93.50:8080/dist/static/return.png" class="return" @click="return_last()">
             <img slot="icon" :src="team1_picture" style="height: 30%;" class="icon1">
-            <p style="color: white;" class="left_text">四川(主)</p>
-            <p style="color: white;" class="match_time1">开赛:12月31日 19:35</p>
+            <p style="color: white;" class="left_text">{{this.major}}(主)</p>
+            <p style="color: white;" class="match_time1">开赛:{{time}}</p>
             <img slot="icon" :src="team2_picture" style="height: 30%;" class="icon2">
-            <p style="color: white;" class="right_text">北京(客)</p>
-            <div v-if="play_video.num==3">
+            <p style="color: white;" class="right_text">{{unmajor}}(客)</p>
+            
+            <div v-if="num==3">
               <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 12%;">
               <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 18%;text-decoration:underline">
-                <a :href="play_video.address1" target="_blank">{{play_video.name1}}</a>
+                <a :href="address1" target="_blank">{{name1}}</a>
                 </span>  
               <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 39%;">
               <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 45%;text-decoration:underline">
-                <a :href="play_video.address2" target="_blank">{{play_video.name2}}</a>
+                <a :href="address2" target="_blank">{{name2}}</a>
               </span> 
               <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 67%;">
               <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 73%;text-decoration:underline">
-                <a :href="play_video.address3">{{play_video.name3}}</a>
+                <a :href="address3">{{name3}}</a>
               </span>  
             </div>
-            <div v-if="play_video.num==2">
+            <div v-if="num==2">
               <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 26%;">
               <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 32%;text-decoration:underline">
-                <a href="play_video.address1" target="_blank">{{play_video.name1}}</a>
+                <a href="address1" target="_blank">{{name1}}</a>
               </span>  
               <img src="http://47.94.93.50:8080/dist/static/play.png" style="width: 5%;position: absolute;top: 83%;left: 52%;">
               <span style="color: rgb(187, 187, 187);position: absolute;top: 81%;left: 58%;text-decoration:underline">
-                <a href="play_video.address2" target="_blank">{{play_video.name2}}</a>
+                <a href="address2" target="_blank">{{name2}}</a>
               </span> 
             </div>
             
@@ -51,27 +52,28 @@
           </tab>
           <div  v-show="show_data_analysis" :style="home_panel_class_data_analysis" ref="data_analysis" class="data_analysis_wrepper">
             <div class="data_analysis">
-              赛季最佳球员
+              <van-tag mark color="#2d2d2d">赛季最佳球员</van-tag>
+              
               <br>
               <img :src="team1_picture" class="data_analysis_team_icon1">
               <span class="data_analysis_team_test1" style="color:#CC0000">{{team.team1}}</span> 
-              <img :src="team1_picture" class="data_analysis_team_icon2">
+              <img :src="team2_picture" class="data_analysis_team_icon2">
               <span class="data_analysis_team_test2" style="color:#000099">{{team.team2}}</span> 
               <br>
               <br>
               <x-table full-bordered :content-bordered="false" :cell-bordered="false" class="best_player">
-                <tbody>
-                  <div v-for="item in data_list">
-                    <tr>
+                <tbody v-for="item in data_list">
+                  
+                    <tr  >
                       <td style="width:25%">
-                        <img src="http://47.94.93.50:8080/dist/static/man.jpg" style="width:35%;margin: 20px 0 0 0;">
+                        <img :src="item.img1" style="width:35%;margin: 20px 0 0 0;">
                         <br>
                       </td>
                       <td style="width:19%"><p style="color: #CC0000;font-weight:bold">{{item.score1}}<p></p></td>
                       <td style="width:12%">{{item.t}}</td>
                       <td style="width:19%"><span style="color: #000099;font-weight:bold">{{item.score2}}</span></td>
                       <td style="width:25%">
-                        <img src="http://47.94.93.50:8080/dist/static/man.jpg" style="width:35%">
+                        <img :src="item.img2" style="width:35%">
                       </td>
                     </tr>
                     <tr>
@@ -85,17 +87,19 @@
                         <p>{{item.name2}}</p>
                       </td>
                     </tr>
-                  </div>
+                  
                 </tbody>
               </x-table>
             <br>
             <hr />
             <br>
-             赛季数据
+            <van-tag mark color="#2d2d2d">赛季数据</van-tag>
+             
             <canvas id="container" width="400" height="260"></canvas>
             <hr />
             <br>
-            最近战绩
+            <van-tag mark color="#2d2d2d" >最近战绩</van-tag>
+            
             <div class="recent_">
               <img src="http://47.94.93.50:8080/dist/static/tim/1.png" class="data_recent_team_icon1">
               <span class="data_recent_team1" style="color:#CC0000">{{team.team1}}</span> 
@@ -109,7 +113,7 @@
                     <td>
                       <x-table :cell-bordered="false" :content-bordered="false" full-bordered>
                         <tbody>
-                            <tr v-for="item in recent_data">
+                            <tr v-for="item in recent_data_left_end">
                               <td>
                                 <recent-record :leftWinOrfalse= "item.result" :leftScore="item.leftScore" :rightScore="item.rightScore" :leftTeam="item.leftTeam" :rightTeam="item.rightTeam" :time="item.time" :show="item.show" :master="item.master"></recent-record>
                               </td>
@@ -120,7 +124,7 @@
                     <td>
                       <x-table :cell-bordered="false" :content-bordered="false" full-bordered>
                         <tbody>
-                            <tr v-for="item in recent_data">
+                            <tr v-for="item in recent_data_right_end">
                               <td>
                                 <recent-record :leftWinOrfalse= "item.result" :leftScore="item.leftScore" :rightScore="item.rightScore" :leftTeam="item.leftTeam" :rightTeam="item.rightTeam" :time="item.time" :show="item.show" :master="item.master"></recent-record>
                               </td>
@@ -136,7 +140,8 @@
             <hr />
             <br>
             <div>
-              本赛季交战
+              <van-tag mark color="#2d2d2d" >本赛季交战</van-tag>
+              
               <x-table  style="background-color:#fff;">
                 <thead>
                   <tr style="background-color: #F7F7F7">
@@ -148,7 +153,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in his_data">
+                    <tr v-for="item in his_data_end">
                       <td>{{item.time}}</td>
                       <td>{{item.match}}</td>
                       <td><span :class="{'iswin':item.score_customer > item.score_master}">{{item.customer}}</span></td>
@@ -173,7 +178,71 @@
             <img slot="label" style="padding-right:10px;display:block;" src="static/input.png" width="24" height="24">
           </x-input>
         </div>
-        
+        <div v-show="show_guess">
+          <van-tag mark color="#2d2d2d">胜率对比图</van-tag>
+          <canvas id="container2" width="400" height="200"></canvas>
+          <van-tag mark color="#2d2d2d">主客场胜率</van-tag>
+          <x-table style="font-size: 16px;" >
+            <thead>
+              <tr style="background-color: #F7F7F7">
+                <th>队伍</th>
+                <th>主场场次</th>
+                <th>主场胜率</th>
+                <th>客场场次</th>
+                <th>客场胜率</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>广东</td>
+                <td>26</td>
+                <td>0.62</td>
+                <td>39</td>
+                <td>0.75</td>
+              </tr>
+              <tr>
+                <td>四川</td>
+                <td>35</td>
+                <td>0.78</td>
+                <td>26</td>
+                <td>0.98</td>
+              </tr>
+            </tbody>
+          </x-table>
+          
+          <span style="margin-left: 10px;font-size: 16px;">历史交战
+            <span>26</span>次广州获胜<span style="color:red;">20</span>次，四川获胜<span style="color:blue;">6</span>次</span>
+            
+            <br/>
+          <van-tag mark color="#2d2d2d">竞猜</van-tag>
+          <div>
+            <p style="margin-left: 10px;font-size: 16px;">本次比赛总分能否会超过184分？</p>
+            <div>
+              <van-button type="info" style="width:45%;margin-left: 10px;">能</van-button>
+            <van-button type="danger" style="width:45%;">不能</van-button>
+            </div>
+            
+          </div>
+          <div>
+            <p style="margin-left: 10px;font-size: 16px;">首节比赛最后一份会不会是罚球得分？</p>
+            <div>
+              <van-button type="info" style="width:45%;margin-left: 10px;">会</van-button>
+            <van-button type="danger" style="width:45%;">不会</van-button>
+            </div>
+            
+          </div>
+          <div>
+            <p style="margin-left: 10px;font-size: 16px;">哪只队伍将会获胜？</p>
+            <div>
+              <van-button type="info" style="width:45%;margin-left: 10px;">广东</van-button>
+            <van-button type="danger" style="width:45%;">四川</van-button>
+            </div>
+            
+          </div>
+          <br/>
+          
+          
+        </div>
 
       </div>
   </v-touch>
@@ -206,10 +275,62 @@ export default {
       show1:true,
       show2:false,
       data_list:[],
-      team:'',
-      data: [],
+      team:{
+        'team1':'',
+        'team2':''
+      },
+      data:[{
+        name: '',
+        分数类型: '得分',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '回合数',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '篮板',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '助攻',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '失误',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '抢断',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '得分',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '回合数',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '篮板',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '助攻',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '失误',
+        分数: 0
+      }, {
+        name: '',
+        分数类型: '抢断',
+        分数: 0
+      }],
       recent_data:[],
       his_data: [],
+      his_data_end:[],
       show_data_analysis: true,
       show_video:false,
       show_guess:false,
@@ -222,14 +343,37 @@ export default {
       team1_picture:'',
       team2_picture:'',
       message_his_data:[],
-      play_video:{}
+      name1:'',
+      name2:'',
+      name3:'',
+      address1:'',
+      address2:'',
+      address3:'',
+      major:'',
+      unmajor:'',
+      time:'',
+      num:0,
+      recent_data_left:[],
+      recent_data_right:[],
+      recent_data_left_end:[],
+      recent_data_right_end:[],
+      win_rate:[ {
+        rate: 0.85,
+        name:''
+      }, {
+        
+        rate: 0.46,
+        name: ''
+      }, ]
+     
     }
   },
   methods: {
+    
     ...mapMutations(['sethomeIndex']),
     _initBScroll() {
-      this.meunScroll = new BScroll(this.$refs.message,{})
-      this.data_analysis = new BScroll(this.$refs.data_analysis,{}) 
+      this.meunScroll = new BScroll(this.$refs.message,{click: true,})
+      this.data_analysis = new BScroll(this.$refs.data_analysis,{click: true,}) 
     },
     setHeight() {
       this.home_panel_class_data_analysis.height = window.innerHeight -244  + "px"
@@ -240,6 +384,7 @@ export default {
       this.$router.push({name:"home"})
     },
     initHisto() {
+      const self = this
       const chart = new F2.Chart({
         id: 'container',
         pixelRatio: window.devicePixelRatio
@@ -272,7 +417,46 @@ export default {
       chart.interval()
         .position('分数类型*分数')
         .color('name',function (name) {
-            if (name == '江苏') {
+            if (name == self.team.team1) {
+              return '#CC0000'
+            } else  
+              return '#000099'
+          })
+        .adjust({
+          type: 'dodge',
+          marginRatio: 1// 设置分组间柱子的间距
+        });
+      chart.render();
+    },
+    initrate() {
+      const self = this
+      const chart = new F2.Chart({
+        id: 'container2',
+        pixelRatio: window.devicePixelRatio
+      });
+
+      chart.source(this.win_rate, {
+        sales: {
+          tickCount: 0
+        }
+      });
+      chart.coord({
+        transposed: true
+      });
+      chart.tooltip({
+        showItemMarker: false,
+        onShow: function onShow(ev) {
+          const items = ev.items;
+          items[0].name = null;
+          items[0].name = items[0].title;
+          items[0].value = '¥ ' + items[0].value;
+        }
+      });
+      
+      chart.interval()
+        .position('name*rate')
+        .color('name',function (name) {
+            if (name == self.team.team1) {
               return '#CC0000'
             } else  
               return '#000099'
@@ -326,22 +510,135 @@ export default {
     }
   },
   mounted () {
-    get_match_detail_analise_data()
+      get_match_detail_analise_data(this.$store.state.user.match_detail_id)
     .then(res => {
+      this.test = "test"
       console.log(res.data)
-      this.data_list = res.data.data_list
-      this.team = res.data.team
-      this.data = res.data.data
-      this.recent_data = res.data.recent_data
-      this.his_data = res.data.his_data
+      console.log(res.data[0].major_img)
+      console.log(this.team1_picture)
+      console.log("major")
+      this.major = res.data[0].major_name
+      console.log(this.major)
+      this.unmajor = res.data[0].unmajor_name
+      this.time = res.data[0].date
+      this.data_list = res.data[1].rank
+      console.log("sdfasdf222")
+      
+      this.num = res.data[0].video_length
+      console.log("num")
+      
+      if(res.data[0].video_length==2){
+        this.name1=res.data[0].video[0].name
+        this.address1 = res.data[0].video[0].path
+        this.name2=res.data[0].video[1].name
+        this.address2 = res.data[0].video[1].path
+      }
+      if(res.data[0].video_length==3){
+        this.name1=res.data[0].video[0].name
+        this.address1 = res.data[0].video[0].path
+        this.name2=res.data[0].video[1].name
+        this.address2 = res.data[0].video[1].path
+        this.name3=res.data[0].video[2].name
+        this.address3 = res.data[0].video[2].path
+      }
+      this.team.team1 = res.data[0].major_name
+      this.team.team2 = res.data[0].unmajor_name
+      
+      for(let i = 0;i < 6;i++){
+        this.data[i].name=res.data[2].major
+        this.data[i].分数 = res.data[2].data[i].major_score
+        this.data[i+6].name=res.data[2].unmajor
+        this.data[i+6].分数 = res.data[2].data[i].major_score
+      }
+      
+      console.log("data")
+      console.log(this.data)
+      
+      this.recent_data_left = res.data[3].major_lately.slice(0,6)
+      this.recent_data_right = res.data[3].unmajor_lately.slice(0,6)
+      for(let i = 0;i<6;i++){
+        if(this.recent_data_left[i].major==this.team.team1){
+          this.recent_data_left_end.push({
+            'time': this.recent_data_left[i].time,
+            'result': this.recent_data_left[i].result,
+            'leftScore': this.recent_data_left[i].major_score,
+            'rightScore': this.recent_data_left[i].unmajor_score,
+            'leftTeam': this.recent_data_left[i].major,
+            'rightTeam': this.recent_data_left[i].unmajor,
+            'master': '主',
+            'show': 0
+
+          })
+          console.log("1111")
+        }else {
+          this.recent_data_left_end.push({
+            'time': this.recent_data_left[i].time,
+            'result': this.recent_data_left[i].result,
+            'leftScore': this.recent_data_left[i].major_score,
+            'rightScore': this.recent_data_left[i].unmajor_score,
+            'leftTeam': this.recent_data_left[i].major,
+            'rightTeam': this.recent_data_left[i].unmajor,
+            'master': '客',
+            'show': 1
+          })
+        }
+          
+      }
+      for(let i = 0;i<6;i++){
+        if(this.recent_data_left[i].major==this.team.team1){
+          this.recent_data_right_end.push({
+            'time': this.recent_data_left[i].time,
+            'result': this.recent_data_left[i].result,
+            'leftScore': this.recent_data_left[i].major_score,
+            'rightScore': this.recent_data_left[i].unmajor_score,
+            'leftTeam': this.recent_data_left[i].major,
+            'rightTeam': this.recent_data_left[i].unmajor,
+            'master': '主',
+            'show': 0
+          })
+        }else {
+          this.recent_data_right_end.push({
+            'time': this.recent_data_left[i].time,
+            'result': this.recent_data_left[i].result,
+            'leftScore': this.recent_data_left[i].major_score,
+            'rightScore': this.recent_data_left[i].unmajor_score,
+            'leftTeam': this.recent_data_left[i].major,
+            'rightTeam': this.recent_data_left[i].unmajor,
+            'master': '客',
+            'show': 1
+          })
+        }
+          
+      }
+      console.log("recent")
+      console.log(this.recent_data_left)
+      this.his_data = res.data[4]
+      for(let i = 0;i<res.data[4].length;i++)
+      {
+        this.his_data_end.push({
+          'time': this.his_data[i].date,
+          'match': this.his_data[i].vs,
+          'master': this.his_data[i].major,
+          'customer': this.his_data[i].unmajor,
+          'score_customer': this.his_data[i].score.split("-")[1],
+          'score_master': this.his_data[i].score.split("-")[0]
+        })
+        }
       this.message_his_data = res.data.message_his_data
-      this.team1_picture = res.data.png.team_picture1
-      this.team2_picture = res.data.png.team_picture2
+      this.team1_picture = res.data[0].major_img
+      this.team2_picture = res.data[0].unmajor_img
+      console.log("img")
+      console.log("this.team1_picture")
       this.play_video = res.data.play_video
+      console.log(this.major)
+      this.win_rate[0].name=  this.team.team2
+      this.win_rate[1].name=  this.team.team1
       this.initHisto()
+      this.initrate()
       this.$nextTick(()  =>  {
         this.setHeight()
         this._initBScroll()
+        
         console.log(this.meunScroll)
       })
     })
@@ -349,8 +646,8 @@ export default {
       console.log(err)
     })
       this.match_id = this.$store.state.user.match_detail_id
-  },
- 
+  }
+  
 }
 </script>
 

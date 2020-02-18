@@ -4,7 +4,7 @@
    
    
 		<div class="match_team">
-			<div class="menu-wrapper" ref="wrapper1">     
+			<div class="menu-wrapper" ref="wrapper1" :style="left_li" >     
         <ul>
           <li v-for="(item, index) in left" class="item_li" :class="{'current':currentIndex===index}" @click="selectMenu(index,$event)">
             <span class="text" >
@@ -41,16 +41,16 @@
                     style="margin-left: 17px;margin-top: 8px;"
                     width="20px"
                     height="20px"
-                    src="http://47.94.93.50:8080/dist/static/tim/1.png"
+                    :src="item.img"
                   />
                  </van-col>
                 <van-col span="3">
-                  <p style="position: absolute;margin-left: -15px;margin-top: 5px;">{{item.name}}</p>
+                  <p style="position: absolute;margin-left: -15px;margin-top: 5px;">{{item.data1}}</p>
                 </van-col>
                 <van-col span="7">
                 </van-col>
                 <van-col span="2">
-                  <p style="margin-left: -55px;margin-top: 5px;">{{item.data1}}</p>
+                  <p style="margin-left: -55px;margin-top: 5px;">{{item.data2}}</p>
                 </van-col>
                 <van-col span="1">
                   
@@ -59,7 +59,7 @@
                 </van-col>
                 <van-col span="4">
       
-                  <span style="position: absolute;right: 8%;font-size: 14px;margin-top: 5px;">{{item.data2}}</span>
+                  <span style="position: absolute;right: 8%;font-size: 14px;margin-top: 5px;">{{item.data3}}</span>
                 </van-col>
               </van-row>
             </div>
@@ -88,7 +88,7 @@
                         <p class="score_class" style="color:#000000;font-weight:bold;">{{item.data1}}</p>
                       </grid-item>
                       <grid-item class="match_grid_item_class_data2" :style="match_grid_item_style_data2">
-                        <p style="color:#000000;">{{item.data2}}</p>
+                        <p style="color:#000000;">{{item.data3}}</p>
                       </grid-item>
                     </div>
                   </grid>
@@ -124,327 +124,7 @@ export default {
       finished:false,
       loading:'',
       left: [],
-      left :[
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"三分得分"},
-        {"name":"11111"},
-      ],
-      all_list : [
-                {
-                  t1:"球队",
-                  t2:"胜-负",
-                  t3:"胜率",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                },
-                {
-                  t1:"得分",
-                  t2:"",
-                  t3:"数据",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                },
-                {
-                  t1:"篮板",
-                  t2:"",
-                  t3:"数据",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                },
-                {
-                  t1:"助攻",
-                  t2:"",
-                  t3:"数据",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                },
-                {
-                  t1:"失误",
-                  t2:"",
-                  t3:"数据",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                },
-                {
-                  t1:"球队",
-                  t2:"胜-负",
-                  t3:"胜率",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                },
-                {
-                  t1:"得分",
-                  t2:"",
-                  t3:"数据",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                },
-                {
-                  t1:"篮板",
-                  t2:"",
-                  t3:"数据",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                },
-                {
-                  t1:"助攻",
-                  t2:"",
-                  t3:"数据",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                },
-                {
-                  t1:"失误",
-                  t2:"",
-                  t3:"数据",
-                  match_list:[
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                    {
-                      img:"/static/tim/1.png",
-                      data1:"7-1",
-                      data2:"87.5%",
-                      name:"广东",
-                      ranking:"1" 
-                    },
-                  ]
-                }
-              ],
+      all_list : [],
       listHeight:[],
       scrollY: 0,
       showFlat:-1,
@@ -460,6 +140,9 @@ export default {
       match_grid_item_style_name:{
         width:"25%"
       },
+      left_li: {
+        height:''
+      }
 		}
 	},
   computed: {
@@ -479,6 +162,10 @@ export default {
     }
   },
 	methods: {
+    setHeight() {
+      this.left_li.height = window.innerHeight -151.5  + "px"
+      
+    },
     onLoad() {},
     _initBScroll() {
       this.meunScroll = new BScroll(this.$refs.wrapper1,{
@@ -486,7 +173,7 @@ export default {
         
       })
       this.rightScroll = new BScroll(this.$refs.right,{
-        probeType: 3
+        probeType: 3,click: true
       });
       this.rightScroll.on('scroll', (pos) => {
         this.scrollY = Math.abs(pos.y);
@@ -523,21 +210,23 @@ export default {
     }
   },
 	mounted() {
-    this.$nextTick(()  =>  {
+    
+		get_team_ranking_data()
+    .then(res => {
+      //console.log(res.data)
+      this.left = res.data.left
+      this.all_list = res.data.right
+      this.$nextTick(()  =>  {
+        this.setHeight()
         this._initBScroll()
         this._calculateHeight()
         console.log(this.rightScroll)
     })
-		// get_team_ranking_data()
-  //   .then(res => {
-  //     //console.log(res.data)
-  //     this.left = res.data.left
-  //     this.all_list = res.data.all_list
       
-  //   })
-  //   .catch(err => {
-  //     console.log(err)
-  //   })
+    })
+    .catch(err => {
+      console.log(err)
+    })
     
 	},
   watch: {
@@ -562,7 +251,6 @@ export default {
 	flex: 0 0 80px;
 	width: 80px;
 	background: #f3f57;
-  height: 100px;
 }
 .team-wrapper {
 	width: 100%;
@@ -580,8 +268,9 @@ export default {
    width: 30px;
 }
 .item_li {
-  height: 50px;
-  background: rgb(238, 238, 238)
+  height: 65px;
+  background: rgb(238, 238, 238);
+  
 }
 .current {
   background: #FFFFFF;

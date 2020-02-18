@@ -82,7 +82,7 @@ export default{
 }
 .leftScore {
   position: absolute;
-  left: 60px;
+  left: 70px;
   top: 3px;
   font-size: 18px;
 }

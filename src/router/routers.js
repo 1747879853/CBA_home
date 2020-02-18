@@ -66,5 +66,10 @@ export default [
         path: '/commu', //赛程详细
         name: 'commu',
         component: () => import('@/view/commu.vue')   
+  },
+  {
+        path: '/user', 
+        name: 'user',
+        component: () => import('@/view/user.vue')   
   }
 ]

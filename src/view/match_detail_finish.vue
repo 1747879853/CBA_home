@@ -3,11 +3,11 @@
 
         <div class="background_top2" >
             <img src="/static/return.png" class="return" @click="return_last()">
-            <img slot="icon" src="/static/tim/1.png" style="height: 30%;width: 15%;" class="icon1">
+            <img slot="icon" :src="team.img1" style="height: 30%;width: 15%;" class="icon1">
             <p style="color: white;" class="left_text">{{team.team1}}(主)</p>
-            <p style="color: white;" class="result_score" >108-124</p>
+            <p style="color: white;" class="result_score" >{{team.score1}}-{{team.score2}}</p>
             <p style="color: white;" class="match_time">已结束</p>
-            <img slot="icon" src="/static/tim/2.png" style="height: 30%;width: 15%;" class="icon2">
+            <img slot="icon" :src="team.img2" style="height: 30%;width: 15%;" class="icon2">
             <p style="color: white;" class="right_text">{{team.team2}}(客)</p>
         </div>
         <div class="content" >
@@ -22,9 +22,10 @@
               <img src="/static/video_play.png" style="width: 10%;position: absolute;top: 45%;left: 42%;">
             </div>
             <div >
-              <div style="margin-left: 5px;">
-                <p>本场最佳</p>
-              </div>
+              
+                
+                <van-tag mark color="#2d2d2d">本场最佳</van-tag>
+              
               <br>
               <van-row style="margin-left: 5px;">
                 <van-col span="6">
@@ -114,514 +115,156 @@
               <van-divider />
               <van-row>
                 <van-col span="4">
-                  <p style="margin-left: 5px;">青岛</p>
+                  <p style="margin-left: 5px;">{{linedata[0].name}}</p>
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 15px;">28</p>    
+                  <p style="margin-left: 15px;">{{linedata[0].分数}}</p>    
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 15px;">35</p>
+                  <p style="margin-left: 15px;">{{linedata[1].分数}}</p>
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 15px;">29</p>
+                  <p style="margin-left: 15px;">{{linedata[2].分数}}</p>
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 15px;">24</p>
+                  <p style="margin-left: 15px;">{{linedata[3].分数}}</p>
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 5px;">116</p>
+                  <p style="margin-left: 5px;">{{linedata[0].分数+linedata[1].分数+linedata[2].分数+linedata[3].分数}}</p>
                 </van-col>
               </van-row>
               <van-row>
                 <van-col span="4">
-                  <p style="margin-left: 5px;">青岛</p>
+                  <p style="margin-left: 5px;">{{linedata[4].name}}</p>
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 15px;">28</p>
+                  <p style="margin-left: 15px;">{{linedata[4].分数}}</p>
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 15px;">35</p>
+                  <p style="margin-left: 15px;">{{linedata[5].分数}}</p>
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 15px;">29</p>
+                  <p style="margin-left: 15px;">{{linedata[6].分数}}</p>
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 15px;">24</p>
+                  <p style="margin-left: 15px;">{{linedata[7].分数}}</p>
                 </van-col>
                 <van-col span="4">
-                  <p style="margin-left: 5px;">116</p>
+                  <p style="margin-left: 5px;">{{linedata[4].分数+linedata[5].分数+linedata[6].分数+linedata[7].分数}}</p>
                 </van-col>
               </van-row>
               <canvas id="container" width="400" height="260"></canvas>
-              &nbsp;&nbsp;&nbsp;<p>本场单项最佳</p>
+              
+              <van-tag mark color="#2d2d2d" >本场单项最佳</van-tag>
+              
+              <br>
               <div>
-                  <x-table full-bordered :content-bordered="false" :cell-bordered="false" class="best_player">
-                    <tbody>
                       <div v-for="item in data_list">
-                        <tr>
-                          <td style="width:25%">
-                            <img src="http://47.94.93.50:8080/dist/static/man.jpg" style="width:35%;margin: 20px 0 0 0;">
-                            <br>
-                          </td>
-                          <td style="width:19%"><p style="color: #CC0000;font-weight:bold">{{item.score1}}<p></p></td>
-                          <td style="width:12%">{{item.t}}</td>
-                          <td style="width:19%"><span style="color: #000099;font-weight:bold">{{item.score2}}</span></td>
-                          <td style="width:25%">
-                            <img src="http://47.94.93.50:8080/dist/static/man.jpg" style="width:35%">
-                          </td>
-                        </tr>
-                        <tr>
-                          <td style="width:25%;line-height: 17px;">
-                            <p>{{item.name1}}</p>
-                          </td>
-                          <td style="width:19%"><p style="color: #CC0000;"><p></p></td>
-                          <td style="width:12%"></td>
-                          <td style="width:19%"><span style="color: #000099;"></span></td>
-                          <td style="width:25%;line-height: 17px;">
-                            <p>{{item.name2}}</p>
-                          </td>
-                        </tr>
+                       <van-row style="margin-left: 5px;">
+                          <van-col span="6">
+                            <div>
+                              <img :src="item.picture1" style="width:35%;margin-left: 29px;">
+                            </div>
+                            
+                          </van-col>
+                          <van-col span="4">
+                             <p style="color: #CC0000;font-weight:bold">{{item.score1}}</p>
+                         
+                          </van-col>
+                          <van-col span="4">
+                             <p style="color: #CC0000;font-weight:bold">{{item.t}}</p>
+                         
+                          </van-col>
+                          <van-col span="4">
+                            <span style="color: #000099;font-weight:bold">{{item.score2}}</span>
+                          </van-col>
+                          <van-col span="6">
+                            <div style="text-align: center;"><img :src="item.picture2" style="width:35%;margin-right: 31px;"></div>
+                            
+                          </van-col>
+                        </van-row>
+                        <van-row>
+                          <van-col span="6">
+                             <div style="text-align: center;">{{item.name1}}</div>
+                          </van-col>
+                          <van-col span="10">
+                          </van-col>
+                          
+                          <van-col span="8">
+                            <div  style="text-align: center;">{{item.name2}}</div>
+                          </van-col>
+                        </van-row>       
                       </div>
-                    </tbody>
-                  </x-table>
                 <br>
                 <hr />
                 <div>
                     <div style="width:20%;float:left;">
-                      <x-table full-bordered :content-bordered="false" :cell-bordered="false" class="best_player"  style="background-color:#fff;">
+                      <x-table :cell-bordered="false" :content-bordered="false" style="background-color:#fff;">
                         <thead>
-                          <tr style="background-color: #F7F7F7">
-                              <th>辽宁</th>
-                            </tr>
+                          <tr style="background-color: #F7F7F7;font-size:16px;">
+                            <th>{{team.team1}}</th>
+                          </tr>
                         </thead>
-                        <tbody>
-                          
-                          <tr>
-                            <td>王华东</td>
+                        <tbody style="font-size:10px;">
+                          <tr v-for="item in major_data">
+                            <td>{{item.name}}</td>
                           </tr>
-                          <tr>
-                            <td>史蒂芬森</td>
+                          <tr style="background-color:#f7f7f7;">
+                            <td>{{team.team2}}</td>
+                            <tr v-for="item in unmajor_data">
+                              <td>{{item.name}}</td>
+                            </tr>
                           </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>史蒂芬森</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>史蒂芬森</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-
-                           <tr style="background-color:#f7f7f7;">
-                            <td>广东</td>
-                          </tr>
-                          <tr>
-                            <td>史蒂芬森</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>史蒂芬森</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>史蒂芬森</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-                          <tr>
-                            <td>王华东</td>
-                          </tr>
-
                         </tbody>
-                      </x-table>
+                      </x-table> 
                     </div>
                     <div class="person-wrap" ref="personWrap" style="width:80%;float:left;overflow:hidden;">
                       <div class="person-list" ref="personTab">
-                        <x-table :cell-bordered="false" :content-bordered="false" style="background-color:#fff;">
-                          <thead>
-                            <tr style="background-color: #F7F7F7">
-                              <th>时间</th>
-                              <th>得分</th>
-                              <th>篮板</th>
-                              <th>助攻</th>
-                              <th>投篮</th>
-                              <th>三分</th>
-                              <th>罚球</th>
-                              <th>前板</th>
-                              <th>后板</th>
-                              <th>抢断</th>
-                              <th>盖帽</th>
-                              <th>失误</th>
-                              <th>犯规</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                             <tr style="background-color:#f7f7f7;">
-                              
-                              <td>时间</td>
+                        <x-table :cell-bordered="false" :content-bordered="false" style="background-color:#fff;" >
+                        <thead>
+                          <tr style="background-color: #F7F7F7;font-size:16px;">
+                            <th>得分</th>
+                            <th>篮板</th>
+                            <th>助攻</th>
+                            <th>三分命中率</th>
+                            <th>二分命中率</th>
+                            <th>抢断</th>
+                            <th>盖帽</th>
+                          </tr>
+                        </thead>
+                        <tbody style="font-size:10px;">
+                          <tr v-for="item in major_data">
+                                <td>{{item.score}}</td>
+                                <td>{{item.lanban}}</td>
+                                <td>{{item.zhugong}}</td>
+                                <td>{{item.threepoint_rate}}</td>
+                                <td>{{item.twopoint_rate}}</td>
+                                <td>{{item.qiangduan}}</td>
+                                <td>{{item.gaimao}}</td>
+                              </tr>
+                           <tr style="background-color: #F7F7F7">
                               <td>得分</td>
                               <td>篮板</td>
                               <td>助攻</td>
-                              <td>投篮</td>
-                              <td>三分</td>
-                              <td>罚球</td>
-                              <td>前板</td>
-                              <td>后板</td>
+                              <td>三分命中率</td>
+                              <td>二分命中率</td>
                               <td>抢断</td>
                               <td>盖帽</td>
-                              <td>失误</td>
-                              <td>犯规</td>
                             </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-                            <tr>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td>Apple</td>
-                              <td>$1.25</td>
-                              <td> x 1</td>
-                              <td> x 1</td>
-                            </tr>
-
-                          </tbody>
-                        </x-table>
+                            
+                              
+                                <tr v-for="item in unmajor_data">
+                                  <td>{{item.score}}</td>
+                                  <td>{{item.lanban}}</td>
+                                  <td>{{item.zhugong}}</td>
+                                  <td>{{item.threepoint_rate}}</td>
+                                  <td>{{item.twopoint_rate}}</td>
+                                  <td>{{item.qiangduan}}</td>
+                                  <td>{{item.gaimao}}</td>
+                                </tr>
+                        </tbody>
+                      </x-table> 
+                       
                       </div>
                     </div>
                   </div>
@@ -653,8 +296,9 @@ export default {
     recentRecord,
     messageHis,
     XInput
-  },
+  }, //http://47.94.93.50:8080/demo/teamdetail?match_id=2*%E5%B9%BF%E4%B8%9C%E5%8D%8E%E5%8D%97%E8%99%8E
   data () {
+    const self = this
     return {
       match_id:'',
       show1:true,
@@ -671,96 +315,15 @@ export default {
         height: ""
       },
       linedata: [
-        {
-          节数:'第一节',
-          分数:25,
-          name:'江苏'
-        },
-        {
-          节数:'第二节',
-          分数:36,
-          name:'江苏'
-        },
-        {
-          节数:'第三节',
-          分数:15,
-          name:'江苏'
-        },
-        {
-          节数:'第四节',
-          分数:25,
-          name:'江苏'
-        },{
-          节数:'第一节',
-          分数:25,
-          name:'辽宁'
-        },
-        {
-          节数:'第二节',
-          分数:36,
-          name:'辽宁'
-        },
-        {
-          节数:'第三节',
-          分数:28,
-          name:'辽宁'
-        },
-        {
-          节数:'第四节',
-          分数:79,
-          name:'辽宁'
-        }
       ],
       data_list : [
-                {
-                  't': '得分',
-                  'name1': '安东尼奥-布莱克呢',
-                  'name2': '兰斯-斯蒂芬孙',
-                  'score1': 38.6,
-                  'score2': 36.3,
-                  'picture1': '/static/man.jpg',
-                  'picture2': '/static/man.jpg'
-                },
-                {
-                  't': '篮板',
-                  'name1': '安东尼奥-布莱克呢',
-                  'name2': '兰斯-斯蒂芬孙',
-                  'score1': 38.6,
-                  'score2': 36.3,
-                  'picture1': '/static/man.jpg',
-                  'picture2': '/static/man.jpg'
-                },
-                {
-                  't': '助攻',
-                  'name1': '安东尼奥-布莱克呢',
-                  'name2': '兰斯-斯蒂芬孙',
-                  'score1': 38.6,
-                  'score2': 36.3,
-                  'picture1': '/static/man.jpg',
-                  'picture2': '/static/man.jpg'
-                },
-                {
-                  't': '抢断',
-                  'name1': '安东尼奥-布莱克呢',
-                  'name2': '兰斯-斯蒂芬孙',
-                  'score1': 38.6,
-                  'score2': 36.3,
-                  'picture1': '/static/man.jpg',
-                  'picture2': '/static/man.jpg'
-                },
-                {
-                  't': '盖帽',
-                  'name1': '安东尼奥-布莱克呢',
-                  'name2': '兰斯-斯蒂芬孙',
-                  'score1': 38.6,
-                  'score2': 36.3,
-                  'picture1': '/static/man.jpg',
-                  'picture2': '/static/man.jpg'
-                }
-      ]
+      ],
+      major_data: [],
+      unmajor_data:[]
     }
   },
   methods: {
+
     ...mapMutations(['sethomeIndex']),
      personScroll() {
       // 默认有六个li子元素，每个子元素的宽度为120px
@@ -783,6 +346,7 @@ export default {
       });
     },
     initHisto() {
+      const self = this
       const chart = new F2.Chart({
         id: 'container',
         pixelRatio: window.devicePixelRatio
@@ -815,7 +379,7 @@ export default {
       chart.interval()
         .position('节数*分数')
         .color('name',function (name) {
-            if (name == '江苏') {
+            if (name == self.linedata[0].name) {
               return '#CC0000'
             } else  
               return '#000099'
@@ -893,17 +457,112 @@ export default {
   },
   mounted () {
     this.$nextTick(()  =>  {
-      this.initHisto()
-       this.personScroll() 
+      
     })
     
-    get_match_finish_data()
+    get_match_finish_data(this.$store.state.user.match_detail_id)
     .then(res => {
       console.log(res.data)
-      this.team = res.data.team
+      this.team = {
+          team1: res.data[0].major_name,
+          team2: res.data[0].unmajor_name,
+          score1: res.data[0].major_score,
+          score2: res.data[0].unmajor_score,
+          img1: res.data[0].major_img,
+          img2: res.data[0].unmajor_img
+        }
+        this.linedata.push ({
+          节数:'第一节',
+          分数:res.data[1].major_one,
+          name:res.data[1].major.substr(0,2)
+        })
+        this.linedata.push ({
+          节数:'第二节',
+          分数:res.data[1].major_two,
+          name:res.data[1].major.substr(0,2)
+        })
+        this.linedata.push ({
+          节数:'第三节',
+          分数:res.data[1].major_three,
+          name:res.data[1].major.substr(0,2)
+        })
+        this.linedata.push ({
+          节数:'第四节',
+          分数:res.data[1].major_four,
+          name:res.data[1].major.substr(0,2)
+        })
+        this.linedata.push ({
+          节数:'第一节',
+          分数:res.data[1].unmajor_one,
+          name:res.data[1].unmajor.substr(0,2)
+        })
+        this.linedata.push ({
+          节数:'第二节',
+          分数:res.data[1].unmajor_two,
+          name:res.data[1].unmajor.substr(0,2)
+        })
+        this.linedata.push ({
+          节数:'第三节',
+          分数:res.data[1].unmajor_three,
+          name:res.data[1].unmajor.substr(0,2)
+        })
+        this.linedata.push ({
+          节数:'第四节',
+          分数:res.data[1].unmajor_four,
+          name:res.data[1].unmajor.substr(0,2)
+        })
+      this.data_list.push({
+        't': '得分',
+        'name1': res.data[2].major_score_name,
+        'name2': res.data[2].unmajor_score_name,
+        'score1': res.data[2].major_score,
+        'score2': res.data[2].unmajor_score,
+        'picture1': res.data[2].major_score_img,
+        'picture2': res.data[2].unmajor_score_img
+      })
+      this.data_list.push({
+        't': '盖帽',
+        'name1': res.data[2].major_nutcap_name,
+        'name2': res.data[2].unmajor_nutcap_name,
+        'score1': res.data[2].major_nutcap_score,
+        'score2': res.data[2].unmajor_nutcap_score,
+        'picture1': res.data[2].major_nutcap_img,
+        'picture2': res.data[2].unmajor_nutcap_img
+      })
+      this.data_list.push({
+        't': '抢断',
+        'name1': res.data[2].major_qiangduan_name,
+        'name2': res.data[2].unmajor_qiangduan_name,
+        'score1': res.data[2].major_qiangduan_score,
+        'score2': res.data[2].unmajor_qiangduan_score,
+        'picture1': res.data[2].major_qiangduan_img,
+        'picture2': res.data[2].unmajor_qiangduan_img
+      })
+      this.data_list.push({
+        't': '助攻',
+        'name1': res.data[2].major_zhugong_name,
+        'name2': res.data[2].unmajor_zhugong_name,
+        'score1': res.data[2].major_zhugong_score,
+        'score2': res.data[2].unmajor_zhugong_score,
+        'picture1': res.data[2].major_zhugong_img,
+        'picture2': res.data[2].unmajor_zhugong_img
+      })
+      this.data_list.push({
+        't': '篮板',
+        'name1': res.data[2].major_lanban_name,
+        'name2': res.data[2].unmajor_lanban_name,
+        'score1': res.data[2].major_lanban_score,
+        'score2': res.data[2].unmajor_lanban_score,
+        'picture1': res.data[2].major_lanban_img,
+        'picture2': res.data[2].unmajor_lanban_img
+      })
+      this.major_data = res.data[3].major
+      this.unmajor_data = res.data[3].unmajor
       this.$nextTick(()  =>  {
         this.setHeight()
         this._initBScroll()
+        this.initHisto()
+       this.personScroll() 
         console.log(this.meunScroll)
       })
     })

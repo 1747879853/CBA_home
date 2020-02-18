@@ -1,7 +1,7 @@
 <template>
 	<div >
 		<div class="card" style="width:90%;height:100px;margin: 3%;">
-          <div style="margin: 0 auto;font-size:61%;">{{matchType}}</div>
+          <div style="padding-left: 10px;padding-top: 3px;font-size:61%;">{{matchType}}</div>
             <img :src="imgUrl1" style="width:40%;width: 25%;position: absolute;left: 5%;">
             <img :src="imgUrl2" style="width:40%;width: 25%;position: absolute;right: 5%;">
           <div style="width:45%;position: absolute;left: 34%;top: 29%;">

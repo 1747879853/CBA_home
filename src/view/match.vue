@@ -1,14 +1,10 @@
 <template>
     <v-touch v-on:swipeleft="swiperleft" v-on:swiperight="swiperright" class="wrapper" :swipe-options="{direction: 'horizontal'}">
       
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text=""
-        @load="onLoad"
-      >
+
       <div :style="team_wrapper" ref="right"  class="team_wrapper_class">
         <div>
+          
         <div v-for="item_all in all_list" class="team-list-hock">
           <van-tabs 
             
@@ -19,7 +15,7 @@
           </van-tabs>
           <div style="background:white;margin:0 0px 0 0px;height: 70px;" v-for="item in item_all.match_list">
             
-            <div @click="match_detail(item.p,item.p2,item.match_id)">
+            <div @click="match_detail(item.p,item.p2,item.match_id,item.score,item.score2)">
               <van-row>
                 <van-col span="5">
                   <van-image
@@ -78,7 +74,7 @@
         </div>
         </div>
       </div>
-    </van-list>
+    
  </div>
  </v-touch>
 </template>
@@ -92,6 +88,7 @@ import {get_match_data} from '@/api/user.js'
 import { mapMutations } from 'vuex'
 import BScroll from 'better-scroll'
 import { List ,Image, Row, Col,Tab, Tabs } from 'vant'
+import { Toast } from 'vant';
 export default{
     name: 'Match',
     components: {
@@ -106,249 +103,106 @@ export default{
       return{
         loading:'',
         finished:'',  
-        all_list: [
-        {
-          time:"11月23日 周三",
-          match_list:[
-            {
-              p:"",
-              score:"69",
-              img:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message:"10:35",
-              name:'八一',
-              p2:"WIN",
-              score2:"69",
-              name2:'南昌',
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-              match_id:""
-            },
-            {
-              p:"WIN",
-              score:"63",
-              name:'青岛',
-              img:"http://47.94.93.50:8080/dist/static/tim/2.png",
-              message:"16:45",
-              p2:"",
-              name2:'广东',
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             match_id:""
-              
-            },
-            {
-              p:"",
-              score:"67",
-              img:"http://47.94.93.50:8080/dist/static/tim/3.png",
-              message:"13:35",
-              p2:"WIN",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-              name2:'南昌',
-              name:'青岛',
-             match_id:""
-            }
-          ]
-        },
-        {
-          time:"11月23日 周三",
-          match_list:[
-            {
-              p:"WIN",
-              score:"69",
-              img:"http://47.94.93.50:8080/dist/static/tim/4.png",
-              message:"13:40",
-              name2:'南昌',
-              name:'青岛',
-              p2:"",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             match_id:""
-             
-            },
-            {
-              p:"WIN",
-              score:"63",
-              img:"http://47.94.93.50:8080/dist/static/tim/5.png",
-              message:"16:45",
-              p2:"",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             name2:'南昌',
-              name:'青岛',
-              match_id:""
-            },
-            {
-              p:"",
-              score:"67",
-              img:"http://47.94.93.50:8080/dist/static/tim/6.png",
-              message:"12:35",
-              p2:"WIN",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             name2:'南昌',
-              name:'青岛',
-              match_id:""
-            }
-          ]
-        },
-        {
-          time:"11月23日 周三",
-          match_list:[
-            {
-              p:"WIN",
-              score:"69",
-              img:"http://47.94.93.50:8080/dist/static/tim/7.png",
-              message:"10:35",
-              p2:"",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             name2:'南昌',
-              name:'青岛',
-             match_id:""
-            },
-            {
-              p:"WIN",
-              score:"63",
-              img:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message:"16:45",
-              p2:"",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             name2:'南昌',
-              name:'青岛',
-              match_id:""
-            },
-            {
-              p:"WIN",
-              score:"67",
-              img:"http://47.94.93.50:8080/dist/static/tim/2.png",
-              message:"7:35",
-              p2:"",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             name2:'南昌',
-              name:'青岛',
-              match_id:""
-            }
-          ]
-        },
-        {
-          time:"11月23日 周三",
-          match_list:[
-            {
-              p:"WIN",
-              score:"69",
-              img:"http://47.94.93.50:8080/dist/static/tim/3.png",
-              message:"9:30",
-              p2:"",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             name2:'南昌',
-              name:'青岛',
-             match_id:""
-            },
-            {
-              p:"WIN",
-              score:"63",
-              img:"http://47.94.93.50:8080/dist/static/tim/4.png",
-              message:"16:45",
-              p2:"",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-              name2:'南昌',
-              name:'青岛',
-              match_id:""
-            },
-            {
-              p:"WIN",
-              score:"67",
-              img:"http://47.94.93.50:8080/dist/static/tim/5.png",
-              message:"8:45",
-              p2:"",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-              name2:'南昌',
-              name:'青岛',
-              match_id:""
-            }
-          ]
-        },
-        {
-          time:"11月23日 周三",
-          match_list:[
-            {
-              p:"",
-              score:"69",
-              img:"http://47.94.93.50:8080/dist/static/tim/6.png",
-              message:"6:35",
-              p2:"WIN",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             match_id:"",
-             name2:'南昌',
-              name:'青岛',
-            },
-            {
-              p:"WIN",
-              score:"63",
-              img:"http://47.94.93.50:8080/dist/static/tim/7.png",
-              message:"16:45",
-              p2:"",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message2:"常规赛第6轮",
-             match_id:"",
-              name2:'南昌',
-              name:'青岛',
-            },
-            {
-              p:"",
-              score:"67",
-              img:"http://47.94.93.50:8080/dist/static/tim/1.png",
-              message:"15:45",
-              p2:"WIN",
-              score2:"69",
-              img2:"http://47.94.93.50:8080/dist/static/tim/6.png",
-              message2:"常规赛第6轮",
-              name2:'南昌',
-              name:'青岛',
-              match_id:""
-            }
-          ]
-        }
-      ],
+        all_list: [],
         listHeight:[],
         scrollY: 0,
          team_wrapper:{
            height:'',
           
          },
-         index:0
+         index:0,
+         now_height:0,
+         data_change:[],
+         updata_flag:false,
+         init_flag:false,
+         now_loca:0
       }
     },
     methods: {
-      onLoad() {},
+      test(){
+        
+      },
+      downLoad() {
+        console.log("down")
+        get_match_data(1)
+        .then(res => {
+          console.log(res.data)
+          for(let i = 0; i < 3;i++){
+            this.all_list.push(res.data[i])
+          }
+          for(let i = 0;i < 3; i++){
+            this.loca += res.data[i].match_list.length*70 + 50
+            this.now_height +=  res.data[i].match_list.length*70 + 44
+         }
+         this.rightScroll.scrollTo(0,-(this.now_height-this.loca),0)
+         this.loca = 0
+         this.updata_flag = false
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        this.$nextTick(()  =>  {
+          
+          this._calculateHeight()
+          this._initBScroll()
+          // for(let i = 0;i < this.all_list.length;i++ ){
+          //   if (this.all_list[i].time[0]+this.all_list[i].time[1] == '明天')
+          //    this.index=i
+          //    break;
+          // }
+        })
+      },
+      upLoad() {
+        console.log("up")
+        get_match_data(-1)
+        .then(res => {
+          console.log(res.data)
+
+          for(let j = 2;j >=0;j--){
+            this.data_change.push(res.data[j])
+            this.loca += res.data[j].match_list.length*70 + 50
+          }
+            //this.data_change=res.data
+            for(let i =0;i<this.all_list.length;i++){
+              this.data_change.push(this.all_list[i])
+            }
+            this.all_list = this.data_change
+            this.data_change = []
+
+          
+          for(let i = 0;i < 3; i++){
+          this.now_height +=  res.data[i].match_list.length*70 + 44
+         }
+         this.rightScroll.scrollTo(0,-this.loca,0)
+         this.loca = 0
+         this.updata_flag = false
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        this.$nextTick(()  =>  {
+          
+          this._calculateHeight()
+          this._initBScroll()
+          // for(let i = 0;i < this.all_list.length;i++ ){
+          //   if (this.all_list[i].time[0]+this.all_list[i].time[1] == '明天')
+          //    this.index=i
+          //    break;
+          // }
+        })
+      },
         _initBScroll() {
         this.rightScroll = new BScroll(this.$refs.right,{
-          probeType: 3,
-          startY: 1000
+          probeType: 3,click: true
         });
         this.rightScroll.on('scroll', (pos) => {
         this.scrollY = Math.abs(pos.y);
       })
+        if(this.init_flag==false){
+          this.rightScroll.scrollTo(0,-300,0)
+          this.init_flag = true
+        }
+        
       },
       _calculateHeight() {
         let teamList = this.$refs.right.getElementsByClassName('team-list-hock')
@@ -376,10 +230,13 @@ export default{
         console.log(this.scrollY)
       },
       ...mapMutations(['setMatchDeatilId']),
-      match_detail(p,p2,match_id) {
-          this.$router.push({name:"match_detail_finish"})
+      match_detail(p,p2,match_id,score,score2) {
         
-      
+        if(score == 0 && score2 == 0) {
+          this.$router.push({name:"match_detail"})
+        }else {
+         this.$router.push({name:"match_detail_finish"})
+        }
       this.setMatchDeatilId(match_id)
       },
       onClick_team_ranking(index) {
@@ -401,23 +258,35 @@ export default{
       }
       },
       watch:{
-        // 'scrollY'() {
-        //   console.log(this.scrollY)
-        // }
+         'scrollY'() {
+          console.log(this.scrollY)
+            if(this.scrollY < 10 && this.updata_flag==false){
+              console.log("1111111111111111")
+              this.updata_flag = true
+              this.upLoad()
+            }else if(this.now_height - this.scrollY < 10&&this.updata_flag==false){
+              this.updata_flag = true
+              this.downLoad()
+              console.log("222222222222222")
+            }
+         }
       },
       mounted() {
         // 在DOM加载后，执行，获得window的高度，并减去header和tabbar的高度，
         // 96是自己在开发者模式看到的，header的height为 40，上下padding为 3，
         // tabbar的height为 50
         
-        // get_match_data()
-        // .then(res => {
-        //   //console.log(res.data)
-        //  //this.all_list =  res.data
-        // })
-        // .catch(err => {
-        //   console.log(err)
-        // })
+        get_match_data()
+        .then(res => {
+          console.log(res.data)
+         this.all_list =  res.data
+         for(let i = 0;i < 3; i++){
+          this.now_height +=  res.data[i].match_list.length*70 + 44
+         }
+        })
+        .catch(err => {
+          console.log(err)
+        })
         this.$nextTick(()  =>  {
           this.setHeight()
           this._calculateHeight()

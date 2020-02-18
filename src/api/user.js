@@ -2,8 +2,11 @@ import axios from '@/libs/api.request'
 export const get_team_ranking_data = () => {
   
   return axios.request({
-    url: 'get_team_ranking_data',
-    method: 'get'
+    url: 'http://47.94.93.50:8080/demo/scorerank',
+    method: 'get',
+    params: {
+      
+    }
   })
 }
 export const getUserInfo = token => {
@@ -15,10 +18,10 @@ export const getUserInfo = token => {
     method: 'get'
   })
 }
-export const get_match_data = () => {
+export const get_match_data = (sign) => {
   return axios.request({
     url: 'http://47.94.93.50:8080/demo/teamSchdule',
-    params: {},
+    params: {sign},
     method: 'get'
   })
 }
@@ -29,17 +32,37 @@ export const get_newpage_data = () => {
     method: 'get'
   })
 }
-export const get_match_detail_analise_data = () => {
+export const get_match_detail_analise_data = (match_id) => {
   return axios.request({
-    url: 'http://47.94.93.50:8080/demo/playerdata',
-    params: {},
+    url: 'http://47.94.93.50:8080/demo/teamdetail_1',
+    params: {match_id},
     method: 'get'
   })
 }
-export const get_match_finish_data = () => {
+export const get_match_finish_data = (match_id) => {
   return axios.request({
-    url: 'get_match_finish_data',
-    params: {},
+    url: 'http://47.94.93.50:8080/demo/teamdetail',
+    params: {
+      match_id
+    },
+    method: 'get'
+  })
+}
+export const get_home_data = () => {
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/maintab',
+    params: {
+      
+    },
+    method: 'get'
+  })
+}
+export const get_new_data = (match_id) => {
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/newsdetail',
+    params: {
+      match_id
+    },
     method: 'get'
   })
 }

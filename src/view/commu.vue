@@ -1,26 +1,29 @@
 <template>
-  <div :style="commu" class="commu_class" ref="commu">
-    <img src="/static/add.png" style="width: 60px;position: absolute;bottom: 20px;right: 10px;">
-  <div style="background-color:#fbf9fe;">
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <div  id="testDiv" style="background-color: white;width:98%;height:100px;margin: 0 auto;border-radius: 5px;margin-top:5px;" v-for="item in list">
-        <p style="font-size: 20px;padding-left: 15px;padding-right: 15px;">{{item.title}}</p>
-        <span style="padding-left: 15px;padding-right: 15px;">{{item.userTime}}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <img src="/static/comment.png" style="width: 20px;">
-        <span>{{item.commNum}}</span>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <img src="/static/up.png" style="width: 20px;">
-        <span>{{item.upNum}}</span>
+  <div>
+    <img src="/static/add.png" style="width: 60px;">
+    <div :style="commu" class="commu_class" ref="commu">
+      
+      <div style="background-color:#fbf9fe;">
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <div  id="testDiv" style="background-color: white;width:98%;height:100px;margin: 0 auto;border-radius: 5px;margin-top:5px;" v-for="item in list">
+            <p style="font-size: 20px;padding-left: 15px;padding-right: 15px;">{{item.title}}</p>
+            <span style="padding-left: 15px;padding-right: 15px;">{{item.userTime}}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="/static/comment.png" style="width: 20px;">
+            <span>{{item.commNum}}</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="/static/up.png" style="width: 20px;">
+            <span>{{item.upNum}}</span>
+          </div>
+        </van-list>
       </div>
-    </van-list>
+    </div>
   </div>
-</div>
 </template>
 <style>
 #testDiv{  width: 100%;  
