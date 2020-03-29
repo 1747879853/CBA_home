@@ -121,7 +121,11 @@ export default{
               main_:true,
               user_detail:false,
               show_login:false,
-              uploader: [{ url: '' }],
+              uploader: [{ 
+                url: '' ,
+
+                isImage: true
+               }],
               user_style:{
                 height:''
               },
@@ -141,7 +145,7 @@ export default{
       
       ...mapMutations(['sethomeIndex','setUserInfo']),
       sub() {
-         changeimg(this.id,this.uploader[0].url)
+         changeimg(this.id,this.uploader[0].content)
         console.log(this.uploader)
       },
       textBlur(){ //手机弹出键盘会把页面向上推动，还原页面
@@ -198,8 +202,8 @@ export default{
            this.score = res.data.score
            this.age = res.data.ballyear
            this.id = res.data.id
-            Toast.success('登录成功');
             
+            console.log(this.uploader)
           })
           .catch(err => {
             console.log(err)
