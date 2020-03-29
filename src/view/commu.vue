@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img src="/static/add.png" style="width: 60px;">
+    
     <div :style="commu" class="commu_class" ref="commu">
       
       <div style="background-color:#fbf9fe;">
@@ -14,8 +14,8 @@
             <p style="font-size: 20px;padding-left: 15px;padding-right: 15px;">{{item.title}}</p>
             <span style="padding-left: 15px;padding-right: 15px;">{{item.userTime}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <img src="/static/comment.png" style="width: 20px;">
-            <span>{{item.commNum}}</span>
+            <img src="/static/comment.png" style="width: 20px;" @click="show_comm_detail">
+            <span>{{item.commuNum}}</span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <img src="/static/up.png" style="width: 20px;">
             <span>{{item.upNum}}</span>
@@ -23,6 +23,7 @@
         </van-list>
       </div>
     </div>
+    <img  src="http://47.94.93.50:8080/dist/static/add.png" style="width: 60px;position:fixed;top: 490px;left: 2014px;" @click="onClickShow">
   </div>
 </template>
 <style>
@@ -36,13 +37,13 @@
   overflow: hidden;
   position: absolute;
 }
+
+
 </style>
 <script>
 import BScroll from 'better-scroll'
 export default{
-
    components: {
-     
    },
    data(){
       return{
@@ -110,12 +111,22 @@ export default{
         ],
         loading: false,
         finished: false,
+        
         commu: {
           height: ""
         },
+        
       }
     },
     methods: {
+      show_comm_detail() {
+        this.$router.push({name:"comm_detail"})
+      },
+      onClickShow() {
+        
+        this.$router.push({name:"input_commu"})
+        console.log("show")
+      },
       _initBScroll() {
           this.commuScroll = new BScroll(this.$refs.commu,{});
       },

@@ -59,7 +59,7 @@
 				</van-swipe>
 				<div style="background-color:white;">
 					<van-row >
-						<van-col span="12">
+						<van-col span="12" @click="match_detail_home(match[0].match_id,match[0].scro1,match[0].scro2)">
 							<card-match  :team1="match[0].name1" :team2="match[0].name2" :imgUrl1="match[0].img_url1" :imgUrl2="match[0].img_url2" :matchType="match[0].type" :scro1="match[0].scro1" :scro2="match[0].scro2" class="match_now"></card-match>
 							</van-col>
 						<van-col span="12">
@@ -68,10 +68,10 @@
 					</van-row>
 					<van-row>
 						<van-col span="12">
-						    <card-match  :team1="match[0].name1" :team2="match[0].name2" :imgUrl1="match[0].img_url1" :imgUrl2="match[0].img_url2" :matchType="match[0].type" :scro1="match[0].scro1" :scro2="match[0].scro2" class="match_now"></card-match>
+						    <card-match  :team1="match[2].name1" :team2="match[2].name2" :imgUrl1="match[2].img_url1" :imgUrl2="match[2].img_url2" :matchType="match[2].type" :scro1="match[2].scro1" :scro2="match[2].scro2" class="match_now"></card-match>
 						</van-col>
 						<van-col span="12">
-						    <card-match  :team1="match[1].name1" :team2="match[1].name2" :imgUrl1="match[1].img_url1" :imgUrl2="match[1].img_url2" :matchType="match[1].type" :scro1="match[1].scro1" :scro2="match[1].scro2" class="match_now"></card-match>
+						    <card-match  :team1="match[3].name1" :team2="match[3].name2" :imgUrl1="match[3].img_url1" :imgUrl2="match[3].img_url2" :matchType="match[3].type" :scro1="match[3].scro1" :scro2="match[3].scro2" class="match_now"></card-match>
 						</van-col>
 					</van-row>
 					
@@ -279,39 +279,7 @@ export default {
 		        'http://47.94.93.50:8080/dist/static/b5.jpg',
 		      ],
 		    match:[
-			    {
-			      'name1': '八一',
-			      'name2': '八一',
-			      'scro1': 99,
-			      'scro2': 100,
-			      'type': '常规赛',
-			      'img_url1': 'http://47.94.93.50:8080/dist/static/tim/1.png',
-			      'img_url2': 'http://47.94.93.50:8080/dist/static/tim/2.png'
-			    },{
-			      'name1': '八一',
-			      'name2': '八一',
-			      'scro1': 99,
-			      'scro2': 100,
-			      'type': '常规赛',
-			      'img_url1': 'http://47.94.93.50:8080/dist/static/tim/1.png',
-			      'img_url2': 'http://47.94.93.50:8080/dist/static/tim/2.png'
-			    },{
-			      'name1': '八一',
-			      'name2': '八一',
-			      'scro1': 99,
-			      'scro2': 100,
-			      'type': '常规赛',
-			      'img_url1': 'http://47.94.93.50:8080/dist/static/tim/1.png',
-			      'img_url2': 'http://47.94.93.50:8080/dist/static/tim/2.png'
-			    },{
-			      'name1': '八一',
-			      'name2': '八一',
-			      'scro1': 99,
-			      'scro2': 100,
-			      'type': '常规赛',
-			      'img_url1': 'http://47.94.93.50:8080/dist/static/tim/1.png',
-			      'img_url2': 'http://47.94.93.50:8080/dist/static/tim/1.png'
-			    }
+			    
 			  ],
 			finished:'',
 			loading:'',
@@ -319,7 +287,16 @@ export default {
 		}
 	},
 	methods: {
-		 ...mapMutations(['sethomeIndex','setnewId']),
+		 ...mapMutations(['sethomeIndex','setnewId','setMatchDeatilId']),
+		 match_detail_home(match_id,score,score2) {
+        	console.log(score,score2)
+	        if(score == 0 && score2 == 0) {
+	          this.$router.push({name:"match_detail"})
+	        }else {
+	         this.$router.push({name:"match_detail_finish"})
+	        }
+	      this.setMatchDeatilId(match_id)
+	      },
 		 test() {
 		 	console.log(this.$store.state.user.userInfo)
 		 },
@@ -469,36 +446,53 @@ export default {
 		}
 	},
 	mounted() {
-		
 	 	get_home_data()
 	    .then(res => {
 	    	for(let i = 0;i < res.data[1].length;i++){
 	    		this.newpage.push({
-	    		'img': res.data[1][i].img,
-	    		'p':res.data[1][i].title,
-	    		'up':res.data[1][i].dianzan,
-	    		'comment': res.data[1][i].pinglun,
-	    		'match_id': res.data[1][i].match_id
-	    	})
+		    		'img': res.data[1][i].img,
+		    		'p':res.data[1][i].title,
+		    		'up':res.data[1][i].dianzan,
+		    		'comment': res.data[1][i].pinglun,
+		    		'match_id': res.data[1][i].match_id
+	    		})
 	    	}
-	    	
+	    	for(let j = 0; j< res.data[0].length; j++){
+	    		this.match.push({
+					'name1': res.data[0][j].major,
+					'name2': res.data[0][j].unmajor,
+					'scro1': res.data[0][j].major_score,
+					'scro2': res.data[0][j].unmajor_score,
+					'type': res.data[0][j].type,
+					'img_url1': res.data[0][j].major_img,
+					'img_url2': res.data[0][j].unmajor_img,
+					'match_id':res.data[0][j].match_id
+	    		})
+	    	}
 			this.$nextTick(()  =>  {
 				this.setHeight()
 				this. _initBScroll()
 				//this.active = this.$store.state.user.homeIndex+3
-				this.activeTab = this.$store.state.user.homeIndex
-				if(this.$store.state.user.homeIndex == 1){
-					this.active = 3
-				}
-				this.swiper.slideTo(this.$store.state.user.homeIndex, 400, false)
-				console.log(this.$store.state.user.homeIndex)
-				this.sethomeIndex(0)
+				
 			})
 	    })
 	    .catch(err => {
 	      console.log(err)
 	    })
-    
+	    this.$nextTick(()  =>  {
+	    	this.activeTab = this.$store.state.user.homeIndex
+		if(this.$store.state.user.homeIndex == 1){
+			this.active = 1
+		}
+		if(this.$store.state.user.homeIndex == 4){
+			this.active = 3
+		}
+		console.log("@@@@@@@@@@@@@@@@@@@@@@")
+		this.swiper.slideTo(this.$store.state.user.homeIndex, 400, false)
+		console.log(this.$store.state.user.homeIndex)
+		this.sethomeIndex(0)
+	    })
+    	
   },
 
  watch: {

@@ -71,5 +71,25 @@ export default [
         path: '/user', 
         name: 'user',
         component: () => import('@/view/user.vue')   
+  },
+  {
+        path: '/comm_detail', 
+        name: 'comm_detail',
+        component: () => import('@/view/comm_detail.vue')   
+  },
+  {
+        path: '/input_commu', 
+        name: 'input_commu',
+        component: () => import('@/view/input_commu.vue')   
+  },
+  {
+        path: '/team_detail', 
+        name: 'team_detail',
+        component: () => import('@/view/team_detail.vue')   
+  },
+  {
+        path: '/test', 
+        name: 'test',
+        component: () => import('@/view/test.vue')   
   }
 ]

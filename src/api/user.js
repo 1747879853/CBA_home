@@ -9,6 +9,30 @@ export const get_team_ranking_data = () => {
     }
   })
 }
+
+
+export const login = (user,passString) => {
+  let data_ = {
+    name:user,
+    password:passString
+  }
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/login',
+    data:data_,
+    method: 'post'
+  })
+}
+export const changeimg = (id,url) => {
+  let data_ = {
+    id:id,
+    img:url
+  }
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/cimg',
+    data:data_,
+    method: 'post'
+  })
+}
 export const getUserInfo = token => {
   return axios.request({
     url: 'get_info',

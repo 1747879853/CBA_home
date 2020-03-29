@@ -47,7 +47,7 @@
         <div class="content" >
           <tab class="content_tab" default-color="#888888" active-color="#000000" bar-active-color="#DD0000">
             <tab-item  @on-item-click="onItemClick_data()" :selected="show_data_analysis">数据分析</tab-item>
-            <tab-item  @on-item-click="onItemClick_video()" :selected="show_video">留言助威</tab-item>
+            
             <tab-item @on-item-click="onItemClick_guess()" :selected="show_guess">战果竞猜</tab-item>
           </tab>
           <div  v-show="show_data_analysis" :style="home_panel_class_data_analysis" ref="data_analysis" class="data_analysis_wrepper">
@@ -95,7 +95,7 @@
             <br>
             <van-tag mark color="#2d2d2d">赛季数据</van-tag>
              
-            <canvas id="container" width="400" height="260"></canvas>
+            <canvas id="container_data" width="400" height="260"></canvas>
             <hr />
             <br>
             <van-tag mark color="#2d2d2d" >最近战绩</van-tag>
@@ -165,22 +165,11 @@
             </div>
           </div>
         </div>
-        <div v-show="show_video">
-          <div  class="his_message" ref="message" :style="home_panel_class_video">
-            <ul>
-              <li>
-                <message-his v-for="(item,index) in message_his_data" :key="index" :message="item.message" :username="item.username" :img="item.img"></message-his>
-              </li>
-            </ul>>
-           
-        </div>  
-          <x-input  placeholder="我来助威..." style="position: absolute;top: 94%;">
-            <img slot="label" style="padding-right:10px;display:block;" src="static/input.png" width="24" height="24">
-          </x-input>
-        </div>
+       
         <div v-show="show_guess">
           <van-tag mark color="#2d2d2d">胜率对比图</van-tag>
-          <canvas id="container2" width="400" height="200"></canvas>
+          <canvas id="container_rate" width="400" height="260"></canvas>
+          <br>
           <van-tag mark color="#2d2d2d">主客场胜率</van-tag>
           <x-table style="font-size: 16px;" >
             <thead>
@@ -332,7 +321,7 @@ export default {
       his_data: [],
       his_data_end:[],
       show_data_analysis: true,
-      show_video:false,
+     
       show_guess:false,
       home_panel_class_data_analysis: {
         height: ""
@@ -372,7 +361,7 @@ export default {
     
     ...mapMutations(['sethomeIndex']),
     _initBScroll() {
-      this.meunScroll = new BScroll(this.$refs.message,{click: true,})
+     
       this.data_analysis = new BScroll(this.$refs.data_analysis,{click: true,}) 
     },
     setHeight() {
@@ -386,7 +375,7 @@ export default {
     initHisto() {
       const self = this
       const chart = new F2.Chart({
-        id: 'container',
+        id: 'container_data',
         pixelRatio: window.devicePixelRatio
       });
       chart.source(this.data);
@@ -431,15 +420,11 @@ export default {
     initrate() {
       const self = this
       const chart = new F2.Chart({
-        id: 'container2',
+        id: 'container_rate',
         pixelRatio: window.devicePixelRatio
       });
 
-      chart.source(this.win_rate, {
-        sales: {
-          tickCount: 0
-        }
-      });
+      chart.source(this.win_rate);
       chart.coord({
         transposed: true
       });
@@ -470,15 +455,15 @@ export default {
     onItemClick_video() {
       this.show_guess = false
       this.show_data_analysis = false
-      this.show_video = true
+      
     },
     onItemClick_data() {
       this.show_guess = false
-      this.show_video = false
+      
       this.show_data_analysis = true
     },
     onItemClick_guess() {
-      this.show_video = false
+      //this.initrate()
       this.show_data_analysis = false
       this.show_guess = true
     },
@@ -513,19 +498,15 @@ export default {
       get_match_detail_analise_data(this.$store.state.user.match_detail_id)
     .then(res => {
       this.test = "test"
-      console.log(res.data)
-      console.log(res.data[0].major_img)
-      console.log(this.team1_picture)
-      console.log("major")
+     
       this.major = res.data[0].major_name
-      console.log(this.major)
+      
       this.unmajor = res.data[0].unmajor_name
       this.time = res.data[0].date
       this.data_list = res.data[1].rank
-      console.log("sdfasdf222")
-      
+     
       this.num = res.data[0].video_length
-      console.log("num")
+     
       
       if(res.data[0].video_length==2){
         this.name1=res.data[0].video[0].name
@@ -551,8 +532,7 @@ export default {
         this.data[i+6].分数 = res.data[2].data[i].major_score
       }
       
-      console.log("data")
-      console.log(this.data)
+      
       
       this.recent_data_left = res.data[3].major_lately.slice(0,6)
       this.recent_data_right = res.data[3].unmajor_lately.slice(0,6)
@@ -569,7 +549,7 @@ export default {
             'show': 0
 
           })
-          console.log("1111")
+          
         }else {
           this.recent_data_left_end.push({
             'time': this.recent_data_left[i].time,
@@ -610,8 +590,7 @@ export default {
         }
           
       }
-      console.log("recent")
-      console.log(this.recent_data_left)
+      
       this.his_data = res.data[4]
       for(let i = 0;i<res.data[4].length;i++)
       {
@@ -627,25 +606,29 @@ export default {
       this.message_his_data = res.data.message_his_data
       this.team1_picture = res.data[0].major_img
       this.team2_picture = res.data[0].unmajor_img
-      console.log("img")
-      console.log("this.team1_picture")
+      
       this.play_video = res.data.play_video
-      console.log(this.major)
-      this.win_rate[0].name=  this.team.team2
-      this.win_rate[1].name=  this.team.team1
-      this.initHisto()
-      this.initrate()
+      
+      this.win_rate[0].name =  this.team.team2
+      this.win_rate[1].name =  this.team.team1
+      //this.initrate()
+      //this.initHisto()
+    console.log(this.win_rate)
+    this.initrate()
+    this.initHisto()
       this.$nextTick(()  =>  {
         this.setHeight()
         this._initBScroll()
-        
-        console.log(this.meunScroll)
+         
+         //
+      
       })
     })
     .catch(err => {
       console.log(err)
     })
       this.match_id = this.$store.state.user.match_detail_id
+       
   }
   
 }

@@ -4,83 +4,81 @@
 
       <div :style="team_wrapper" ref="right"  class="team_wrapper_class">
         <div>
-          
-        <div v-for="item_all in all_list" class="team-list-hock">
-          <van-tabs 
-            
-            line-width="0px"
-            line-height="0px"
-          >
-            <van-tab :title="item_all.time" style="background-color:white;"></van-tab>
-          </van-tabs>
-          <div style="background:white;margin:0 0px 0 0px;height: 70px;" v-for="item in item_all.match_list">
-            
-            <div @click="match_detail(item.p,item.p2,item.match_id,item.score,item.score2)">
-              <van-row>
-                <van-col span="5">
-                  <van-image
-                    style="margin-left: 17px;margin-top: 8px;"
-                    width="20px"
-                    height="20px"
-                    :src="item.img"
-                  />
-                 </van-col>
-                <van-col span="3">
-                  <p style="position: absolute;left: 12%;margin-top: 5px;">{{item.name}}</p>
-                </van-col>
-                <van-col span="7">
-                </van-col>
-                <van-col span="2">
-                  <p style="margin-left: -30px;margin-top: 5px;">{{item.score}}</p>
-                </van-col>
-                <van-col span="1">
-                  <img src="http://47.94.93.50:8080/dist/static/win.png" style="width:13px;margin-left: -30px;margin-top: 11px;" v-if="item.p=='WIN'">
-                </van-col>
-                <van-col span="2">
-                </van-col>
-                <van-col span="4">
-                  <img src="http://47.94.93.50:8080/dist/static/match_video.png"  style="width: 13px;position: absolute;right: 12%;margin-top: 11px;">
-                  <span style="position: absolute;right: 4%;font-size: 14px;margin-top: 5px;">集锦</span>
-                </van-col>
-              </van-row>
-              <van-row>
-                <van-col span="5">
-                  <van-image
-                    style="margin-left: 17px;margin-top: 3px;"
-                    width="20px"
-                    height="20px"
-                    :src="item.img2"
-                  />
-                </van-col>
-                <van-col span="3">
-                  <p style="position: absolute;left: 12%;">{{item.name2}}</p>
-                </van-col>
-                <van-col span="7">
-                </van-col>
-                <van-col span="2">
-                  <p style="margin-left: -30px;">{{item.score2}}</p>
-                </van-col>
-                <van-col span="1">
-                  <img src="http://47.94.93.50:8080/dist/static/win.png" style="width:13px;margin-left: -30px;margin-top: 6px;" v-if="item.p2=='WIN'">
-                </van-col>
-                <van-col span="2">
-                </van-col>
-                <van-col span="4">
-                  <span style="font-size:10px;position: absolute;right: 4%;margin-top: 7px;">{{item.message2}}</span>
-                </van-col>
-              </van-row>
-            </div>
-          </div>    
-        </div>
+          <div v-for="item_all in all_list" class="team-list-hock">
+            <van-tabs 
+              
+              line-width="0px"
+              line-height="0px"
+            >
+              <van-tab :title="item_all.time" style="background-color:white;"></van-tab>
+            </van-tabs>
+            <div style="background:white;margin:0 0px 0 0px;height: 70px;" v-for="item in item_all.match_list">
+              
+              <div @click="match_detail(item.p,item.p2,item.match_id,item.score,item.score2)">
+                <van-row>
+                  <van-col span="5">
+                    <van-image
+                      style="margin-left: 17px;margin-top: 8px;"
+                      width="20px"
+                      height="20px"
+                      :src="item.img"
+                    />
+                   </van-col>
+                  <van-col span="3">
+                    <p style="position: absolute;left: 12%;margin-top: 5px;">{{item.name}}</p>
+                  </van-col>
+                  <van-col span="7">
+                  </van-col>
+                  <van-col span="2">
+                    <p style="margin-left: -30px;margin-top: 5px;">{{item.score}}</p>
+                  </van-col>
+                  <van-col span="1">
+                    <img src="http://47.94.93.50:8080/dist/static/win.png" style="width:13px;margin-left: -30px;margin-top: 11px;" v-if="item.p=='WIN'">
+                  </van-col>
+                  <van-col span="2">
+                  </van-col>
+                  <van-col span="4">
+                    <img src="http://47.94.93.50:8080/dist/static/match_video.png"  style="width: 13px;position: absolute;right: 12%;margin-top: 11px;">
+                    <span style="position: absolute;right: 4%;font-size: 14px;margin-top: 5px;">集锦</span>
+                  </van-col>
+                </van-row>
+                <van-row>
+                  <van-col span="5">
+                    <van-image
+                      style="margin-left: 17px;margin-top: 3px;"
+                      width="20px"
+                      height="20px"
+                      :src="item.img2"
+                    />
+                  </van-col>
+                  <van-col span="3">
+                    <p style="position: absolute;left: 12%;">{{item.name2}}</p>
+                  </van-col>
+                  <van-col span="7">
+                  </van-col>
+                  <van-col span="2">
+                    <p style="margin-left: -30px;">{{item.score2}}</p>
+                  </van-col>
+                  <van-col span="1">
+                    <img src="http://47.94.93.50:8080/dist/static/win.png" style="width:13px;margin-left: -30px;margin-top: 6px;" v-if="item.p2=='WIN'">
+                  </van-col>
+                  <van-col span="2">
+                  </van-col>
+                  <van-col span="4">
+                    <span style="font-size:10px;position: absolute;right: 4%;margin-top: 7px;">{{item.message2}}</span>
+                  </van-col>
+                </van-row>
+              </div>
+            </div>    
+          </div>
         </div>
       </div>
-    
- </div>
  </v-touch>
 </template>
 <style>
 .team_wrapper_class {
   background-color: white;
+  width: 100%;
 }
 </style>
 <script>
@@ -107,15 +105,15 @@ export default{
         listHeight:[],
         scrollY: 0,
          team_wrapper:{
-           height:'',
-          
+           height:''
          },
          index:0,
          now_height:0,
          data_change:[],
          updata_flag:false,
          init_flag:false,
-         now_loca:0
+         now_loca:0,
+
       }
     },
     methods: {
@@ -126,6 +124,7 @@ export default{
         console.log("down")
         get_match_data(1)
         .then(res => {
+          console.log("successDown")
           console.log(res.data)
           for(let i = 0; i < 3;i++){
             this.all_list.push(res.data[i])

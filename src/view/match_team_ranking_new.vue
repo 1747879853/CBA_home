@@ -162,9 +162,11 @@ export default {
     }
   },
 	methods: {
+    match_detail() {
+      this.$router.push({name:"team_detail"})
+    },
     setHeight() {
       this.left_li.height = window.innerHeight -151.5  + "px"
-      
     },
     onLoad() {},
     _initBScroll() {

@@ -44,7 +44,6 @@
               </div>
             </div>
           </div>
-         
           <p>{{message_comm}}</p>
           <van-overlay :show="show">
             <div class="wrapper">
@@ -64,13 +63,44 @@
                 </van-field>
                 </van-cell-group>
                 <div style="position: absolute;right: 0px;bottom: 6px;">
-                  
                 </div>
-                
               </div>
             </div>
           </van-overlay>
           <p>{{input_value}}</p>
+          <van-overlay :show="show_login" @click="show_login = false">
+            <div class="wrapper" @click.stop>
+               <div  style="background-color:#fbf9fe;height:100%;">
+                <div style="padding-top: 61px;width: 80%;margin: 0 auto;">
+                  <van-form >
+                  <van-field
+                    v-model="username"
+                    name="用户名"
+                    label="用户名"
+                    placeholder="用户名"
+                    @blur="textBlur()"
+                    :rules="[{ required: true, message: '请填写用户名' }]"
+                  />
+                  <van-field
+                    v-model="password"
+                    type="password"
+                    name="密码"
+                    label="密码"
+                    placeholder="密码"
+                    @blur="textBlur()"
+                    :rules="[{ required: true, message: '请填写密码' }]"
+                  />
+                  <div style="margin: 16px;">
+                    <van-button round block type="info" native-type="submit" @click="onSubmit">
+                      提交
+                    </van-button>
+                  </div>
+                </van-form>
+                </div>
+              </div>
+            </div>
+          </van-overlay>
+         
           <group>
             <span @click="onClickShow">
               <span style="position: fixed;top: 94%;background-color: white;width: 100%;border-top: 1px solid #ffe7e7;bottom: 0px;" v-model="input_value" :max="200">
@@ -155,6 +185,8 @@ import {  Flexbox, FlexboxItem, XHeader, XButton, XImg, ViewBox, Panel, XInput, 
 import BScroll from 'better-scroll'
 import { mapMutations } from 'vuex'
 import {get_new_data} from '@/api/user.js'
+import { Toast } from 'vant'
+
 export default{
     
      components: {
@@ -184,33 +216,83 @@ export default{
               input_value:'',
               show_comment_flag:false,
               shwo_main_falg:true,
+              show_login:false,
               show: false,
               message_comm:'',
               commu_:[
               ],
               new_time:'',
-              new_title:''
+              new_title:'',
+              username: '',
+              password: '',
+              
             }// 
      },
 
      methods: {
+       ...mapMutations(['setUserInfo']),
+      onSubmit(values) {
+        this.setUserInfo(this.username,this.password)
+        Toast.success('登录成功');
+        this.show_login = false
+        this.show = true
+      },
+      textBlur(){ //手机弹出键盘会把页面向上推动，还原页面
+        document.body.scrollTop = 0;
+      },
     //   textBlur(){
     //   document.body.scrollTop = 0;
     // },
       noop() {},
       onClickShow() {
-    this.show =true
+        if(this.$store.state.user.user_num==''){
+          this.show_login = true
+        }else {
+          this.show = true
+        }
+    //this.show =true
   },
-
   onClickHide() {
+    Date.prototype.format = function(fmt){
+      var o = {
+        "M+" : this.getMonth()+1,                 //月份
+        "d+" : this.getDate(),                    //日
+        "h+" : this.getHours(),                   //小时
+        "m+" : this.getMinutes(),                 //分
+        "s+" : this.getSeconds(),                 //秒
+        "q+" : Math.floor((this.getMonth()+3)/3), //季度
+        "S"  : this.getMilliseconds()             //毫秒
+      };
+
+      if(/(y+)/.test(fmt)){
+        fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+      }
+            
+      for(var k in o){
+        if(new RegExp("("+ k +")").test(fmt)){
+          fmt = fmt.replace(
+            RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));  
+        }       
+      }
+
+      return fmt;
+    }
+
+   
+
+    var now = new Date();
+    var nowStr = now.format("yyyy-MM-dd hh:mm:ss");
+    
+    
     console.log("sdfas")
-    console.log(this.message_comm)
+    console.log(nowStr)
+    
     this.show = false
     this.commu_.push({
       'name': '-风起',
       'img': '/static/3.jpg',
-      'time': '2017 3.12',
-      'up': 1147,
+      't': nowStr,
+      'up': 0,
       'content': this.message_comm
     })
   },
