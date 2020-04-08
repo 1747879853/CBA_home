@@ -8,6 +8,9 @@ const router = new Router({
   routes
 })
 const LOGIN_PAGE_NAME = 'login'
-
+const routerPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error=> error)
+}
 
 export default router

@@ -10,6 +10,64 @@ export const get_team_ranking_data = () => {
   })
 }
 
+export const get_team_data = (team) => {
+  
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/team_detail',
+    method: 'get',
+    params: {
+      team
+    }
+  })
+}
+ 
+export const get_player_data = () => {
+  
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/playerrank',
+    method: 'get',
+    params: {
+      
+    }
+  })
+}
+
+export const up = (id) => {
+  let data_ = {
+    id
+  }
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/up',
+    data:data_,
+    method: 'post'
+  })
+}
+
+export const post_guss = (user_id,major,unmajor,question,answer,time) => {
+  let data_ = {
+    major:major,
+    unmajor:unmajor,
+    user_id:user_id,
+    question:question,
+    answer:answer,
+    time:time
+  }
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/jc',
+    data:data_,
+    method: 'post'
+  })
+}
+export const get_guss_data = (major,unmajor) => {
+  
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/jc_data',
+    method: 'get',
+    params: {
+      major,unmajor
+    }
+  })
+}
 
 export const login = (user,passString) => {
   let data_ = {
@@ -18,6 +76,19 @@ export const login = (user,passString) => {
   }
   return axios.request({
     url: 'http://47.94.93.50:8080/demo/login',
+    data:data_,
+    method: 'post'
+  })
+}
+export const comment = (user_id,news_id,contents,data) => {
+  let data_ = {
+    user_id:user_id,
+    news_id:news_id,
+    contents:contents,
+    date:data
+  }
+  return axios.request({
+    url: 'http://47.94.93.50:8080/demo/comment',
     data:data_,
     method: 'post'
   })

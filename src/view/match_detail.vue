@@ -50,7 +50,7 @@
             
             <tab-item @on-item-click="onItemClick_guess()" :selected="show_guess">战果竞猜</tab-item>
           </tab>
-          <div  v-show="show_data_analysis" :style="home_panel_class_data_analysis" ref="data_analysis" class="data_analysis_wrepper">
+          <div  v-show="show_data_analysis" :style="home_panel_class_data_analysis" ref="datAnalysis" class="data_analysis_wrepper">
             <div class="data_analysis">
               <van-tag mark color="#2d2d2d">赛季最佳球员</van-tag>
               
@@ -167,9 +167,12 @@
         </div>
        
         <div v-show="show_guess">
-          <van-tag mark color="#2d2d2d">胜率对比图</van-tag>
-          <canvas id="container_rate" width="400" height="260"></canvas>
+          <van-tag mark color="#2d2d2d">胜率对比</van-tag>
+           <br>
+           <span style="color:blue;">{{major}}:  {{major_rate}}</span><br>
+           <span style="color:#ee0a24;">{{unmajor}}:  {{unmajor_rate}}</span>
           <br>
+         
           <van-tag mark color="#2d2d2d">主客场胜率</van-tag>
           <x-table style="font-size: 16px;" >
             <thead>
@@ -183,56 +186,85 @@
             </thead>
             <tbody>
               <tr>
-                <td>广东</td>
-                <td>26</td>
-                <td>0.62</td>
-                <td>39</td>
-                <td>0.75</td>
+                <td>{{m.name}}</td>
+                <td>{{m.major_play_num}}</td>
+                <td>{{m.major_win_rate}}</td>
+                <td>{{m.unmajor_play_num}}</td>
+                <td>{{m.unmajor_win_rate}}</td>
               </tr>
               <tr>
-                <td>四川</td>
-                <td>35</td>
-                <td>0.78</td>
-                <td>26</td>
-                <td>0.98</td>
+                <td>{{um.name}}</td>
+                <td>{{um.major_play_num}}</td>
+                <td>{{um.major_win_rate}}</td>
+                <td>{{um.unmajor_play_num}}</td>
+                <td>{{um.unmajor_win_rate}}</td>
               </tr>
             </tbody>
           </x-table>
           
           <span style="margin-left: 10px;font-size: 16px;">历史交战
-            <span>26</span>次广州获胜<span style="color:red;">20</span>次，四川获胜<span style="color:blue;">6</span>次</span>
+            <span>{{his.sum}}</span>次{{major}}获胜<span style="color:red;">{{his.major_num}}</span>次，{{unmajor}}获胜<span style="color:blue;">{{his.unmajor_num}}</span>次</span>
             
             <br/>
           <van-tag mark color="#2d2d2d">竞猜</van-tag>
+          
           <div>
-            <p style="margin-left: 10px;font-size: 16px;">本次比赛总分能否会超过184分？</p>
+            <p style="margin-left: 10px;font-size: 16px;">{{guss.A}}</p>
             <div>
-              <van-button type="info" style="width:45%;margin-left: 10px;">能</van-button>
-            <van-button type="danger" style="width:45%;">不能</van-button>
+              <van-button type="info" style="width:45%;margin-left: 10px;" @click="post_guss('A_option_1')">{{guss.A_option_1}}</van-button>
+            <van-button type="danger" style="width:45%;" @click="post_guss('A_option_2')">{{guss.A_option_2}}</van-button>
             </div>
             
           </div>
           <div>
-            <p style="margin-left: 10px;font-size: 16px;">首节比赛最后一份会不会是罚球得分？</p>
+            <p style="margin-left: 10px;font-size: 16px;">{{guss.B}}</p>
             <div>
-              <van-button type="info" style="width:45%;margin-left: 10px;">会</van-button>
-            <van-button type="danger" style="width:45%;">不会</van-button>
+              <van-button type="info" style="width:45%;margin-left: 10px;" @click="post_guss('B_option_1')">{{guss.B_option_1}}</van-button>
+            <van-button type="danger" style="width:45%;" @click="post_guss('B_option_2')">{{guss.B_option_2}}</van-button>
             </div>
             
           </div>
           <div>
-            <p style="margin-left: 10px;font-size: 16px;">哪只队伍将会获胜？</p>
+            <p style="margin-left: 10px;font-size: 16px;">{{guss.C}}</p>
             <div>
-              <van-button type="info" style="width:45%;margin-left: 10px;">广东</van-button>
-            <van-button type="danger" style="width:45%;">四川</van-button>
+              <van-button type="info" style="width:45%;margin-left: 10px;" @click="post_guss('C_option_1')">{{guss.C_option_1}}</van-button>
+            <van-button type="danger" style="width:45%;" @click="post_guss('C_option_2')">{{guss.C_option_2}}</van-button>
             </div>
-            
           </div>
           <br/>
-          
-          
         </div>
-
+        <div>
+            <div class="wrapper" @click.stop v-show="show_login">
+               <div  style="background-color:#fbf9fe;height:100%;">
+                <div style="padding-top: 61px;width: 80%;margin: 0 auto;">
+                  
+                  <van-field
+                    v-model="username"
+                    name="用户名"
+                    label="用户名"
+                    placeholder="用户名"
+                    @blur="textBlur()"
+                    :rules="[{ required: true, message: '请填写用户名' }]"
+                  />
+                  <van-field
+                    v-model="password"
+                    type="password"
+                    name="密码"
+                    label="密码"
+                    placeholder="密码"
+                    @blur="textBlur()"
+                    :rules="[{ required: true, message: '请填写密码' }]"
+                  />
+                  <div style="margin: 16px;">
+                    <van-button round block type="info" native-type="submit" @click="onSubmit">
+                      提交
+                    </van-button>
+                  </div>
+               
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
   </v-touch>
 </template>
@@ -241,12 +273,13 @@ import { Tab, TabItem, XTable, XInput } from 'vux'
 import { mapMutations } from 'vuex'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
-import { get_match_detail_analise_data } from '@/api/user.js'
+import { get_match_detail_analise_data,get_guss_data,post_guss,login } from '@/api/user.js'
 import F2 from '@antv/f2'
 import _ from 'lodash'
 import recentRecord from '@/components/recent_record.vue'
 import BScroll from 'better-scroll'
 import messageHis from '@/components/message_his.vue'
+import { Toast } from 'vant'
 export default {
   components: {
     Header,
@@ -260,10 +293,21 @@ export default {
   },
   data () {
     return {
+      major_max:'',
+      unmajor_max:'',
+      password:'',
+      username:'',
+      show_login:false,
+      guss:null,
+      major_rate:0,
+      unmajor_rate:0,
       match_id:'',
       show1:true,
       show2:false,
       data_list:[],
+      his:null,
+      m:null,
+      um:null,
       team:{
         'team1':'',
         'team2':''
@@ -347,25 +391,109 @@ export default {
       recent_data_left_end:[],
       recent_data_right_end:[],
       win_rate:[ {
-        rate: 0.85,
+        rate: 0,
         name:''
       }, {
         
-        rate: 0.46,
+        rate: 0,
         name: ''
-      }, ]
+      }, ],
+      major_full:null,
+      unmajor_full:null
      
     }
   },
   methods: {
     
-    ...mapMutations(['sethomeIndex']),
-    _initBScroll() {
+    ...mapMutations(['sethomeIndex','setUserInfo']),
+    onSubmit(values) {
+        
+        login(this.username,this.password)
+        .then(res => {
+         
+         
+         
+         this.setUserInfo({
+          'num':this.username,
+          'password':this.password,
+          'id': res.data.id,
+          'name':res.data.name,
+          'img':res.data.img,
+          'sign':res.data.sign,
+          'next':res.data.next,
+          'score':res.data.score,
+          'inscore':res.data.inscore
+         })
+         
+          Toast.success('登录成功');
+          this.show_login = false
+          this.show_guess = true
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        
+      },
+      textBlur(){ //手机弹出键盘会把页面向上推动，还原页面
+        document.body.scrollTop = 0;
+      },
+    post_guss(a){
+        Date.prototype.format = function(fmt){
+        var o = {
+          "M+" : this.getMonth()+1,                 //月份
+          "d+" : this.getDate(),                    //日
+          "h+" : this.getHours(),                   //小时
+          "m+" : this.getMinutes(),                 //分
+          "s+" : this.getSeconds(),                 //秒
+          "q+" : Math.floor((this.getMonth()+3)/3), //季度
+          "S"  : this.getMilliseconds()             //毫秒
+        };
+
+        if(/(y+)/.test(fmt)){
+          fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        }
+              
+        for(var k in o){
+          if(new RegExp("("+ k +")").test(fmt)){
+            fmt = fmt.replace(
+              RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));  
+          }       
+        }
+
+        return fmt;
+      }
+
      
-      this.data_analysis = new BScroll(this.$refs.data_analysis,{click: true,}) 
+
+      var now = new Date();
+      var nowStr = now.format("MM-dd");
+
+      if(this.$store.state.user.user_id==0){
+        this.show_guess = false
+
+        this.show_login = true
+
+      }else{
+        post_guss(this.$store.state.user.user_id,this.major_max,this.unmajor_max,a.substring(0, 1),a,nowStr)
+        .then(res => {
+          Toast.success('竞猜成功');
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
+      // post_guss = (user_id,major,unmajor,question,anwser,time)
+      
+    },
+    _initBScroll() {
+     console.log("sssssssdfsd")
+      this.data_analysis = new BScroll(this.$refs.datAnalysis,{click: true}) 
+      console.log("sssssssdfsd")
+      console.log(this.data_analysis)
     },
     setHeight() {
       this.home_panel_class_data_analysis.height = window.innerHeight -244  + "px"
+      console.log("insetheight")
       this.home_panel_class_video.height = window.innerHeight -289.6+ "px"
     },
     return_last() {
@@ -374,15 +502,15 @@ export default {
     },
     initHisto() {
       const self = this
-      const chart = new F2.Chart({
+      const chart_hi = new F2.Chart({
         id: 'container_data',
         pixelRatio: window.devicePixelRatio
       });
-      chart.source(this.data);
-      chart.tooltip({
+      chart_hi.source(this.data);
+      chart_hi.tooltip({
         custom: true, // 自定义 tooltip 内容框
         onChange: function onChange(obj) {
-          const legend = chart.get('legendController').legends.top[0];
+          const legend = chart_hi.get('legendController').legends.top[0];
           const tooltipItems = obj.items;
           const legendItems = legend.items;
           const map = {};
@@ -399,11 +527,11 @@ export default {
           legend.setItems(_.values(map));
         },
         onHide: function onHide() {
-          const legend = chart.get('legendController').legends.top[0];
-          legend.setItems(chart.getLegendItems().country);
+          const legend = chart_hi.get('legendController').legends.top[0];
+          legend.setItems(chart_hi.getLegendItems().country);
         }
       });
-      chart.interval()
+      chart_hi.interval()
         .position('分数类型*分数')
         .color('name',function (name) {
             if (name == self.team.team1) {
@@ -415,55 +543,25 @@ export default {
           type: 'dodge',
           marginRatio: 1// 设置分组间柱子的间距
         });
-      chart.render();
-    },
-    initrate() {
-      const self = this
-      const chart = new F2.Chart({
-        id: 'container_rate',
-        pixelRatio: window.devicePixelRatio
-      });
 
-      chart.source(this.win_rate);
-      chart.coord({
-        transposed: true
-      });
-      chart.tooltip({
-        showItemMarker: false,
-        onShow: function onShow(ev) {
-          const items = ev.items;
-          items[0].name = null;
-          items[0].name = items[0].title;
-          items[0].value = '¥ ' + items[0].value;
-        }
-      });
-      
-      chart.interval()
-        .position('name*rate')
-        .color('name',function (name) {
-            if (name == self.team.team1) {
-              return '#CC0000'
-            } else  
-              return '#000099'
-          })
-        .adjust({
-          type: 'dodge',
-          marginRatio: 0.05 // 设置分组间柱子的间距
-        });
-      chart.render();
+      chart_hi.render();
+     
     },
+    
+    
     onItemClick_video() {
       this.show_guess = false
       this.show_data_analysis = false
       
     },
     onItemClick_data() {
+      
       this.show_guess = false
       
       this.show_data_analysis = true
     },
     onItemClick_guess() {
-      //this.initrate()
+      
       this.show_data_analysis = false
       this.show_guess = true
     },
@@ -495,13 +593,38 @@ export default {
     }
   },
   mounted () {
+   const _this = this
+    
       get_match_detail_analise_data(this.$store.state.user.match_detail_id)
     .then(res => {
+
+      console.log(res.data)
+      this.major_max = res.data[0].major
+      this.unmajor_max = res.data[0].unmajor
       this.test = "test"
      
       this.major = res.data[0].major_name
       
       this.unmajor = res.data[0].unmajor_name
+      this.major_full = res.data[0].major
+      this.unmajor_full = res.data[0].unmajor
+      // get_guss_data(res.data[0].major,res.data[0].unmajor)
+      // .then(res => {
+      //   console.log(res.data)
+      //   console.log("---------------")
+      //   console.log(parseFloat(res.data[0].major_rate))
+      //   this.major_rate=parseInt(parseFloat(res.data[0].major_rate)*100)
+        
+      //   this.unmajor_rate=parseInt(parseFloat(res.data[0].unmajor_rate)*100)
+      //   this.m = res.data[1][0]
+      //   this.um = res.data[1][1]
+      //   this.guss = res.data[3]
+      //   this.his = res.data[2]
+      //   console.log(this.win_rate)
+      // })
+      // .catch(err => {
+      //   console.log(err)
+      // })
       this.time = res.data[0].date
       this.data_list = res.data[1].rank
      
@@ -603,24 +726,27 @@ export default {
           'score_master': this.his_data[i].score.split("-")[0]
         })
         }
-      this.message_his_data = res.data.message_his_data
+      //this.message_his_data = res.data.message_his_data
       this.team1_picture = res.data[0].major_img
       this.team2_picture = res.data[0].unmajor_img
       
       this.play_video = res.data.play_video
       
-      this.win_rate[0].name =  this.team.team2
-      this.win_rate[1].name =  this.team.team1
-      //this.initrate()
-      //this.initHisto()
+      // this.win_rate[0].name =  this.team.team2
+      // this.win_rate[1].name =  this.team.team1
+     
+    //  this.initHisto()
+    console.log("&&&&&&&&&&&&&")
     console.log(this.win_rate)
-    this.initrate()
-    this.initHisto()
+   // this.initHisto_rate()
+   // 
       this.$nextTick(()  =>  {
-        this.setHeight()
-        this._initBScroll()
+        _this.setHeight()
+        _this._initBScroll()
          
+         _this.initHisto()
          //
+
       
       })
     })
@@ -628,7 +754,23 @@ export default {
       console.log(err)
     })
       this.match_id = this.$store.state.user.match_detail_id
-       
+       get_guss_data(this.$store.state.user.major,this.$store.state.user.unmajor)
+      .then(res => {
+        console.log(res.data)
+        console.log("---------------")
+        console.log(parseFloat(res.data[0].major_rate))
+        this.major_rate=parseFloat(res.data[0].major_rate)
+        
+        this.unmajor_rate=parseFloat(res.data[0].unmajor_rate)
+        this.m = res.data[1][0]
+        this.um = res.data[1][1]
+        this.guss = res.data[3]
+        this.his = res.data[2]
+        console.log(this.win_rate)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
   
 }

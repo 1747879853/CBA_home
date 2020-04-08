@@ -88,8 +88,8 @@ export default [
         component: () => import('@/view/team_detail.vue')   
   },
   {
-        path: '/test', 
-        name: 'test',
-        component: () => import('@/view/test.vue')   
+        path: '/player_rank', 
+        name: 'player_rank',
+        component: () => import('@/view/player_rank.vue')   
   }
 ]

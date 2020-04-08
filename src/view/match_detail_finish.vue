@@ -14,7 +14,7 @@
           <tab class="content_tab" default-color="#888888" active-color="#000000" bar-active-color="#DD0000">
             <tab-item  @on-item-click="onItemClick_data()" :selected="show_data_analysis">战报</tab-item>
             <tab-item  @on-item-click="onItemClick_video()" :selected="show_video">统计</tab-item>
-            <tab-item @on-item-click="onItemClick_guess()" :selected="show_guess">竞猜</tab-item>
+            
           </tab>
           <div v-show="false">
             <div style="width:98%;border-top-left-radius:12px;border-top-right-radius:12px;overflow:hidden;margin: 10px auto;background-image:/static/video.png">
@@ -307,7 +307,7 @@ export default {
       team:'',  
       show_data_analysis: true,
       show_video:false,
-      show_guess:false,
+     
       home_panel_class_data_analysis: {
         height: ""
       },
@@ -418,29 +418,22 @@ export default {
       this.$router.push({name:"home"})
     },
     onItemClick_video() {
-      this.show_guess = false
+     
       this.show_data_analysis = false
       this.show_video = true
     },
     onItemClick_data() {
-      this.show_guess = false
+     
       this.show_video = false
       this.show_data_analysis = true
     },
-    onItemClick_guess() {
-      this.show_video = false
-      this.show_data_analysis = false
-      this.show_guess = true
-    },
+    
     swiperight: function () {  
       if (this.show_data_analysis) {
         this.sethomeIndex(1)
       this.$router.push({name:"home"})
       }else if(this.show_video) {
         this.onItemClick_data()
-        console.log(this.show_video)
-      }else if(this.show_guess) {
-        this.onItemClick_video()
         console.log(this.show_video)
       }
     },

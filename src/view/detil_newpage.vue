@@ -3,7 +3,7 @@
     
         <x-header :left-options="{backText: ''}" style="background-color:#2d2d2d;">CBA新闻</x-header>
         <div style="background-color: #ffffff;">
-          <div class="main" ref="message" :style="main_">
+          <div class="main" ref="message" :style="main_" v-show="main_show">
             <div v-show="shwo_main_falg">
               <div style="margin: 10px;">
                 <h2>{{new_title}}</h2>
@@ -19,7 +19,7 @@
               
               <span style="width: 100%;height:35px;background-color: #ffffff;">{{new_time}}</span>
               <div style="width: 100%;height:11px;background-color: rgb(246, 238, 238);"></div>
-              <div v-for="item in commu_" class="main_2">
+              <div v-for="(item,index) in commu_" class="main_2">
                 
                   <van-divider />
                 <div class="com_top">
@@ -35,8 +35,8 @@
                 <div class="com_bottom">
                    <span class="time">{{item.t}}</span>
                    <span >
-                    <span>
-                      <img src="/static/up.png" style="width: 25px;position: absolute;right: 85px;bottom: 1%;" >
+                    <span @click="up(item.id,index)">
+                      <img :id="item.id" :src="up_img" style="width: 25px;position: absolute;right: 85px;bottom: 1%;" >
                       <span style="position: absolute;right: 10px;bottom: 0%;">点赞({{item.up}})</span>
                     </span>
                    </span>
@@ -68,11 +68,11 @@
             </div>
           </van-overlay>
           <p>{{input_value}}</p>
-          <van-overlay :show="show_login" @click="show_login = false">
-            <div class="wrapper" @click.stop>
+          <div>
+            <div class="wrapper" @click.stop v-show="show_login">
                <div  style="background-color:#fbf9fe;height:100%;">
                 <div style="padding-top: 61px;width: 80%;margin: 0 auto;">
-                  <van-form >
+                  
                   <van-field
                     v-model="username"
                     name="用户名"
@@ -95,16 +95,18 @@
                       提交
                     </van-button>
                   </div>
-                </van-form>
+                
                 </div>
               </div>
             </div>
-          </van-overlay>
+          </div>
+            
+      
          
           <group>
             <span @click="onClickShow">
               <span style="position: fixed;top: 94%;background-color: white;width: 100%;border-top: 1px solid #ffe7e7;bottom: 0px;" v-model="input_value" :max="200">
-            <img slot="label" style="    position: fixed;bottom: 10px;left: 4px;" src="http://47.94.93.50:8080/dist/static/input.png" width="24" height="24">
+            <img slot="label" style="position: fixed;bottom: 10px;left: 4px;" src="http://47.94.93.50:8080/dist/static/input.png" width="24" height="24">
             <span style="position: fixed;bottom: 10px;left: 54px;">
               我来评论...
             </span>
@@ -113,8 +115,8 @@
             </span>
             
             
-            <img src="http://47.94.93.50:8080/dist/static/up.png" style="position: fixed;width: 7%;top: 95%;right: 15%;">
-            <span style="position: fixed;width: 7%;top: 96%;right: 7%;">112</span>
+            <img :src="up_img_comm"  style="position: fixed;width: 7%;top: 95%;right: 15%;" @click="up_comm">
+            <span style="position: fixed;width: 7%;top: 96%;right: 7%;">{{num}}</span>
           </group>
         </div>
       </v-touch>
@@ -184,7 +186,7 @@ html, body {
 import {  Flexbox, FlexboxItem, XHeader, XButton, XImg, ViewBox, Panel, XInput, Group } from 'vux'
 import BScroll from 'better-scroll'
 import { mapMutations } from 'vuex'
-import {get_new_data} from '@/api/user.js'
+import {get_new_data, login,comment,up} from '@/api/user.js'
 import { Toast } from 'vant'
 
 export default{
@@ -202,6 +204,8 @@ export default{
      },
      data(){
             return{
+              up_img_comm:'http://47.94.93.50:8080/dist/static/up.png',
+              up_img:'http://47.94.93.50:8080/dist/static/up.png',
               value:'',
               title:'',
               src:'',
@@ -218,6 +222,7 @@ export default{
               shwo_main_falg:true,
               show_login:false,
               show: false,
+              main_show:true,
               message_comm:'',
               commu_:[
               ],
@@ -225,17 +230,68 @@ export default{
               new_title:'',
               username: '',
               password: '',
+              user_img:'',
+              name_:'',
+              new_id:null,
+              user_id:null,
+              num:0,
+
               
             }// 
      },
 
      methods: {
        ...mapMutations(['setUserInfo']),
+       up_comm() {
+        this.up_img_comm = 'http://47.94.93.50:8080/dist/static/uped.png'
+        this.num += 1
+       },
+       up(id,index){
+        console.log(index)
+        up(id)
+        .then(res => {
+         console.log(res.data)
+         this.commu_[index].up = this.commu_[index].up + 1
+         var img = document.getElementById(id)
+         img.src = 'http://47.94.93.50:8080/dist/static/uped.png'
+         console.log(img.src)
+         
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        
+       },
       onSubmit(values) {
-        this.setUserInfo(this.username,this.password)
-        Toast.success('登录成功');
-        this.show_login = false
-        this.show = true
+        
+        login(this.username,this.password)
+        .then(res => {
+         
+         this.user_img = res.data.img
+         this.name_ = res.data.name
+         this.user_id = res.data.id
+         
+         this.setUserInfo({
+          'num':this.username,
+          'password':this.password,
+          'id': res.data.id,
+          'name':res.data.name,
+          'img':res.data.img,
+          'sign':res.data.sign,
+          'next':res.data.next,
+          'score':res.data.score,
+          'inscore':res.data.inscore
+         })
+         
+          Toast.success('登录成功');
+          this.show_login = false
+          this.show = true
+          this.main_show= true
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        
       },
       textBlur(){ //手机弹出键盘会把页面向上推动，还原页面
         document.body.scrollTop = 0;
@@ -246,6 +302,7 @@ export default{
       noop() {},
       onClickShow() {
         if(this.$store.state.user.user_num==''){
+          this.main_show = false
           this.show_login = true
         }else {
           this.show = true
@@ -285,16 +342,24 @@ export default{
     
     
     console.log("sdfas")
+    console.log(this.$store.state.user.user_id)
     console.log(nowStr)
-    
+    comment(this.$store.state.user.user_id,this.new_id,this.message_comm,nowStr)
+        .then(res => {
+         this.commu_.push({
+            'name':this.$store.state.user.name ,
+            'img': this.$store.state.user.img,
+            't': nowStr,
+            'up': 0,
+            'content': this.message_comm,
+            'id':res.data
+          })
+        })
+        .catch(err => {
+          console.log(err)
+        })
     this.show = false
-    this.commu_.push({
-      'name': '-风起',
-      'img': '/static/3.jpg',
-      't': nowStr,
-      'up': 0,
-      'content': this.message_comm
-    })
+    
   },
       ...mapMutations(['sethomeIndex']),
      
@@ -333,6 +398,8 @@ export default{
           this.content = res.data.new_content
           this.commu_ = res.data.commu_
           this.src = res.data.new_img
+
+          this.new_id = res.data.new_id
           this.new_time = res.data.new_time
           this.new_title = res.data.new_title
           this.$nextTick(()  =>  {
@@ -344,7 +411,8 @@ export default{
         .catch(err => {
           console.log(err)
         })
-      
+      this.num = this.$store.state.user.num
+        console.log("##############")
         
          
         

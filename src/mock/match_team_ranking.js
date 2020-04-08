@@ -29,6 +29,10 @@ function temp() {
     cartabledata: cartableData
   }
 }
+
+
+
+
 var left = [
         {"name":"三分得分"},
         {"name":"三分得分"},

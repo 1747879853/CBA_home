@@ -18,10 +18,20 @@ state: {
         user_num: '',
         password:'',
         new_id:'',
-       
-        //user_id:null,
-        
-        
+        user_id:0,
+        name:'',
+        img:'',
+        sign:'',
+        next:'',
+        score:0,
+        inscore:0,
+        num:0,
+        major:'',
+        unmajor:'',
+        team:'',
+        str:'',
+        time:''
+
 //   /*  userName: '',
 //     userId: '',
 //     token: getToken(),
@@ -43,27 +53,49 @@ state: {
 //     getexcelflag: 0*/
   },
    mutations: {
-    setUserInfo(state, num,password) {
-      localStorage.setItem('user_num', num)
+    setSrt(state,ployed){
+      state.time = ployed.time
+      state.str = ployed.str
+    },
+    setUserInfo(state, ployed) {
+      localStorage.setItem('user_num', ployed.num)
       state.user_num=localStorage.getItem('user_num') 
-      localStorage.setItem('password', password)
+      localStorage.setItem('password', ployed.password)
       state.password=localStorage.getItem('password') 
+      console.log("invuex")
       
-      //state.user_id = user_id
+      state.user_id = ployed.id
+      state.name = ployed.name
+      state.img = ployed.img
+      state.sign = ployed.sign
+      state.next = ployed.next
+      state.score = ployed.score
+      state.inscore = ployed.inscore
     },
     setNowpageinfo(state,now_newpage_text,now_newpage_img_path){
       state.now_newpage_text = now_newpage_text
       state.now_newpage_img_path = now_newpage_img_path
     },
-    setMatchDeatilId(state,match_detail_id){
-      state.match_detail_id = match_detail_id
+    setMatchDeatilId(state,ployed){
+      state.match_detail_id = ployed.match_id
+      state.major = ployed.major
+      state.unmajor = ployed.unmajor
     },
     sethomeIndex(state,homeIndex){
       state.homeIndex = homeIndex
     },
-    setnewId(state,id){
-      state.new_id = id
+    setnewId(state,ployed){
+      state.new_id = ployed.id
+      state.num = ployed.num
+      
+    },
+    setteam(state,ployed){
+      state.team = ployed.name
+      
+      
     }
+    
+
 //     // setAvatar(state, avatarPath) {
 //     //   state.avatarImgPath = avatarPath
 //     // },

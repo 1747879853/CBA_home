@@ -34,7 +34,7 @@
           </van-tabs>
           <div style="background:white;margin:0 0px 0 0px;height: 35px;" v-for="item in item_all.match_list">
             
-            <div @click="match_detail(item.p,item.p2,item.match_id)">
+            <div @click="match_detail(item.data5)">
               <van-row>
                 <van-col span="5">
                   <van-image
@@ -108,6 +108,7 @@ import Header from '@/components/Header.vue'
 import BScroll from 'better-scroll'
 import {get_team_ranking_data} from '@/api/user.js'
 import {Tab, TabItem,Grid, GridItem,Card} from 'vux'
+import { mapMutations } from 'vuex'
 export default {
 	components: {
     Header,
@@ -162,7 +163,10 @@ export default {
     }
   },
 	methods: {
-    match_detail() {
+     ...mapMutations(['setteam']),
+    match_detail(name) {
+      console.log(name)
+      this.setteam({'name':name})
       this.$router.push({name:"team_detail"})
     },
     setHeight() {
@@ -190,7 +194,7 @@ export default {
         height += item.clientHeight;
         this.listHeight.push(height);
       }
-      console.log(this.listHeight);
+     
     },
     selectMenu(index,event) {
       this.scrollY = this.listHeight[index];

@@ -14,7 +14,7 @@
             </van-tabs>
             <div style="background:white;margin:0 0px 0 0px;height: 70px;" v-for="item in item_all.match_list">
               
-              <div @click="match_detail(item.p,item.p2,item.match_id,item.score,item.score2)">
+              <div @click="match_detail(item.p,item.p2,item.match_id,item.score,item.score2,item.true_name,item.true_name2)">
                 <van-row>
                   <van-col span="5">
                     <van-image
@@ -106,6 +106,7 @@ export default{
         scrollY: 0,
          team_wrapper:{
            height:''
+
          },
          index:0,
          now_height:0,
@@ -121,11 +122,11 @@ export default{
         
       },
       downLoad() {
-        console.log("down")
+        //("down")
         get_match_data(1)
         .then(res => {
-          console.log("successDown")
-          console.log(res.data)
+          //("successDown")
+          //(res.data)
           for(let i = 0; i < 3;i++){
             this.all_list.push(res.data[i])
           }
@@ -138,7 +139,7 @@ export default{
          this.updata_flag = false
         })
         .catch(err => {
-          console.log(err)
+          //(err)
         })
         this.$nextTick(()  =>  {
           
@@ -152,10 +153,11 @@ export default{
         })
       },
       upLoad() {
-        console.log("up")
+        
         get_match_data(-1)
         .then(res => {
-          console.log(res.data)
+          //("up")
+          //(res.data)
 
           for(let j = 2;j >=0;j--){
             this.data_change.push(res.data[j])
@@ -177,7 +179,7 @@ export default{
          this.updata_flag = false
         })
         .catch(err => {
-          console.log(err)
+          //(err)
         })
         this.$nextTick(()  =>  {
           
@@ -212,37 +214,42 @@ export default{
           height += item.clientHeight;
           this.listHeight.push(height);
         }
-        console.log(this.listHeight);
+        //(this.listHeight);
       },
       fun() {
-        console.log("sss")
+        //("sss")
       this.scrollY = this.listHeight[this.index];
         this.rightScroll.scrollTo(0,-18000,0)
     },
       selectMenu(index) {
-        console.log("index")
-        console.log(index)
+        //("index")
+        //(index)
 
         this.scrollY = this.listHeight[index];
         this.rightScroll.scrollTo(0,-this.scrollY,0)
-        console.log("end")
-        console.log(this.scrollY)
+        //("end")
+        //(this.scrollY)
       },
-      ...mapMutations(['setMatchDeatilId']),
-      match_detail(p,p2,match_id,score,score2) {
+      ...mapMutations(['setMatchDeatilId','sethomeIndex']),
+      match_detail(p,p2,match_id,score,score2,n1,n2) {
         
         if(score == 0 && score2 == 0) {
-          this.$router.push({name:"match_detail"})
+          this.$router.push({path:"/match_detail"}).catch(data => {  })
         }else {
-         this.$router.push({name:"match_detail_finish"})
+         this.$router.push({name:"match_detail_finish"}).catch(data => {  })
         }
-      this.setMatchDeatilId(match_id)
+        this.sethomeIndex(1)
+      this.setMatchDeatilId({
+        'match_id':match_id,
+        'major':n1,
+        'unmajor':n2
+      })
       },
       onClick_team_ranking(index) {
-        this.$router.push({name:"match_detail_finish"})
+        this.$router.push({name:"match_detail_finish"}).catch(data => {  })
       },
       onClick_player_ranking(index) {
-        this.$router.push({name:"match_detail_finish"})
+        this.$router.push({name:"match_detail_finish"}).catch(data => {  })
       },
       setHeight() {
         this.team_wrapper.height = window.innerHeight - 151.5 + "px"
@@ -258,15 +265,15 @@ export default{
       },
       watch:{
          'scrollY'() {
-          console.log(this.scrollY)
+          //(this.scrollY)
             if(this.scrollY < 10 && this.updata_flag==false){
-              console.log("1111111111111111")
+              //("1111111111111111")
               this.updata_flag = true
               this.upLoad()
             }else if(this.now_height - this.scrollY < 10&&this.updata_flag==false){
               this.updata_flag = true
               this.downLoad()
-              console.log("222222222222222")
+              //("222222222222222")
             }
          }
       },
@@ -277,14 +284,14 @@ export default{
         
         get_match_data()
         .then(res => {
-          console.log(res.data)
+          //(res.data)
          this.all_list =  res.data
          for(let i = 0;i < 3; i++){
           this.now_height +=  res.data[i].match_list.length*70 + 44
          }
         })
         .catch(err => {
-          console.log(err)
+          //(err)
         })
         this.$nextTick(()  =>  {
           this.setHeight()

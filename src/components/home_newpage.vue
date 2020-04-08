@@ -82,7 +82,7 @@
 						finished-text="没有更多了"
 						
 						>
-			            	<div style="position:relative;height:100px;" v-for="item in newpage" @click="to_deil_newpage(item.match_id)">
+			            	<div style="position:relative;height:100px;" v-for="item in newpage" @click="to_deil_newpage(item.match_id,item.up)">
 								<van-divider />
 
 								<img :src="item.img" style="width: 30%;position: absolute;right: 3%;">
@@ -108,9 +108,9 @@
     	<swiper-slide>
     		<match-team-ranking-new class="content2"></match-team-ranking-new>
     	</swiper-slide>
-    	<swiper-slide>
-    		<p style="color:white;">这是球员榜</p>
-    		<button @click="test()">tttt</button>
+    	<swiper-slide style="margin-top: -30px;">
+    		.
+    		<player-rank></player-rank>
     	</swiper-slide>
     		
     	<swiper-slide>
@@ -175,6 +175,7 @@ import BScroll from 'better-scroll'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import match from '@/view/match'
 import commu from '@/view/commu'
+import playerRank from '@/view/player_rank'
 import matchTeamRankingNew from '@/view/match_team_ranking_new.vue'
 import tabs from '@/components/tabs.vue'
 import { mapMutations } from 'vuex'
@@ -191,7 +192,8 @@ export default {
     	matchTeamRankingNew,
     	tabs,
     	commu,
-    	user
+    	user,
+    	playerRank
 	},
 	data () {
 		const self = this
@@ -227,7 +229,7 @@ export default {
 		        speed:600, //config参数同swiper4,与官网一致
 		        on: {
                     slideChangeTransitionEnd: function(){
-                    	console.log('num')
+                    	//('num')
                     	self.activeTab = this.activeIndex
                     	if(this.activeIndex == 0){
                     		self.active = 0
@@ -247,14 +249,14 @@ export default {
                     	if(this.activeIndex == 5) {
                     		self.active = 4
                     	}
-                    	console.log("现在的页面")
-                    	console.log(this.activeIndex)
-                    	console.log("store")
-                    	console.log(self.$store.state.user.homeIndex)
+                    	//("现在的页面")
+                    	//(this.activeIndex)
+                    	//("store")
+                    	//(self.$store.state.user.homeIndex)
                       self.$store.state.user.homeIndex = this.activeIndex //切换结束告诉vuex是第几个页面，进而控制背景颜色变化
-                      console.log(this.activeIndex);//切换结束时，告诉我现在是第几个slide
-                      console.log("tab")
-                      console.log(this.activeIndex)
+                      //(this.activeIndex);//切换结束时，告诉我现在是第几个slide
+                      //("tab")
+                      //(this.activeIndex)
                       if (this.activeIndex!=0) {
 							 self.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
 						}
@@ -289,7 +291,7 @@ export default {
 	methods: {
 		 ...mapMutations(['sethomeIndex','setnewId','setMatchDeatilId']),
 		 match_detail_home(match_id,score,score2) {
-        	console.log(score,score2)
+        	//(score,score2)
 	        if(score == 0 && score2 == 0) {
 	          this.$router.push({name:"match_detail"})
 	        }else {
@@ -297,13 +299,15 @@ export default {
 	        }
 	      this.setMatchDeatilId(match_id)
 	      },
-		 test() {
-		 	console.log(this.$store.state.user.userInfo)
-		 },
-		 to_deil_newpage(match_id) {
-		 	console.log("match_id")
-		 	console.log(match_id)
-		 	this.setnewId(match_id)
+		 
+		 to_deil_newpage(match_id,nu) {
+		 	//("match_id")
+		 	//(nu)
+		 	
+		 	this.setnewId({
+		 		'id':match_id,
+		 		'num':nu
+		 	})
 		 	this.$router.push({name:"detil_newpage"})
 		 },
 		onChangeTab(index) {
@@ -334,7 +338,7 @@ export default {
 			
 		},
 		slideChangeTransitionEnd(index) {
-			console.log(index)
+			//(index)
 
 		},
 		 _initBScroll() {
@@ -342,8 +346,8 @@ export default {
 	        probeType: 3,
 	        click: true
 	      })
-	      console.log(this.meunScroll)
-	      console.log("sdfsadfasdfasdfasdfasdf")
+	      //(this.meunScroll)
+	      //("sdfsadfasdfasdfasdfasdf")
 	      this.meunScroll.on('scroll', (pos) => {
 	        this.scrollY = Math.abs(pos.y);
 	        if (this.scrollY!=0) {
@@ -358,12 +362,12 @@ export default {
 	      this.content_style.height = window.innerHeight - 101.5 + "px"
 	    },
 		onChange(index) {
-			console.log("sdfsadfsadfasdf")
-			console.log(this.$store.state.user.homeIndex)
-			console.log("sss")
+			//("sdfsadfsadfasdf")
+			//(this.$store.state.user.homeIndex)
+			//("sss")
 			
 			if (this.flag == false&&this.$store.state.user.homeIndex==0) {
-				console.log(this.flag)
+				//(this.flag)
 	        switch(index) {
 	          case 0:
 	          {
@@ -433,8 +437,8 @@ export default {
 	    	 	this.color_bac = 'background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%); background-blend-mode: multiply;'
 	    		this.flag = true
 	    	 }
-	    	console.log(name)
-	    	//console.log(document.getElementById(name));
+	    	//(name)
+	    	////(document.getElementById(name));
 	    },
 	    onSearch() {
 	    },
@@ -448,6 +452,7 @@ export default {
 	mounted() {
 	 	get_home_data()
 	    .then(res => {
+	    	//("in home")
 	    	for(let i = 0;i < res.data[1].length;i++){
 	    		this.newpage.push({
 		    		'img': res.data[1][i].img,
@@ -457,7 +462,22 @@ export default {
 		    		'match_id': res.data[1][i].match_id
 	    		})
 	    	}
-	    	for(let j = 0; j< res.data[0].length; j++){
+	    	
+	    	if(res.data[0].length < 3){
+	    		for(let j = 0; j< 4; j++){
+	    		this.match.push({
+					'name1': '山东',
+					'name2': '四川',
+					'scro1': 100,
+					'scro2': 105,
+					'type': '常规赛',
+					'img_url1': '/static/tim/1.png',
+					'img_url2': '/static/tim/1.png',
+					'match_id':0
+	    		})
+	    	}
+	    	}else{
+	    		for(let j = 0; j< res.data[0].length; j++){
 	    		this.match.push({
 					'name1': res.data[0][j].major,
 					'name2': res.data[0][j].unmajor,
@@ -469,11 +489,12 @@ export default {
 					'match_id':res.data[0][j].match_id
 	    		})
 	    	}
+	    	}
 			this.$nextTick(()  =>  {
 				this.setHeight()
 				this. _initBScroll()
 				//this.active = this.$store.state.user.homeIndex+3
-				
+				this.swiper.slideTo(this.$store.state.user.homeIndex, 400, false)
 			})
 	    })
 	    .catch(err => {
@@ -487,10 +508,9 @@ export default {
 		if(this.$store.state.user.homeIndex == 4){
 			this.active = 3
 		}
-		console.log("@@@@@@@@@@@@@@@@@@@@@@")
-		this.swiper.slideTo(this.$store.state.user.homeIndex, 400, false)
-		console.log(this.$store.state.user.homeIndex)
-		this.sethomeIndex(0)
+		//("@@@@@@@@@@@@@@@@@@@@@@")
+		
+		
 	    })
     	
   },
@@ -499,7 +519,11 @@ export default {
     '$route'() {
       if(this.$store.state.user.homeIndex!=0){
         this.color_bac='background-image: linear-gradient(to left, #BDBBBE 0%, #9D9EA3 100%), radial-gradient(88% 271%, rgba(255, 255, 255, 0.25) 0%, rgba(254, 254, 254, 0.25) 1%, rgba(0, 0, 0, 0.25) 100%), radial-gradient(50% 100%, rgba(255, 255, 255, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%); background-blend-mode: normal, lighten, soft-light;'
+       
+		
       }
+
+      
     }
   }
   // watch: {

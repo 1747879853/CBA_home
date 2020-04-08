@@ -153,8 +153,18 @@ export default{
       },
       onSubmit(values) {
         login(this.username,this.password)
-        .then(res => {
-         this.setUserInfo(this.username,this.password)
+        .then(res => { 
+         this.setUserInfo({
+          'num':this.username,
+          'password':this.password,
+          'id': res.data.id,
+          'name':res.data.name,
+          'img':res.data.img,
+          'sign':res.data.sign,
+          'next':res.data.next,
+          'score':res.data.score,
+          'inscore':res.data.inscore
+         })
          this.user_img = res.data.img
          this.name_ = res.data.name
          this.chenghao = res.data.sign
@@ -189,7 +199,17 @@ export default{
           
           login(this.username,this.password)
           .then(res => {
-           this.setUserInfo(this.username,this.password)
+          this.setUserInfo({
+          'num':this.username,
+          'password':this.password,
+          'id': res.data.id,
+          'name':res.data.name,
+          'img':res.data.img,
+          'sign':res.data.sign,
+          'next':res.data.next,
+          'score':res.data.score,
+          'inscore':res.data.inscore
+         })
            this.uploader[0].url = res.data.img
            this.user_img = res.data.img
            this.name_ = res.data.name
@@ -258,6 +278,13 @@ export default{
           }else {
             this.user_detail = true
             this.main_ = false
+            this.name_ = this.$store.state.user.name
+            this.user_img = this.$store.state.user.img
+            this.chenghao = this.$store.state.user.sign
+            this.score = this.$store.state.user.score
+            this.full_score = this.$store.state.user.inscore
+            this.next_sing = this.$store.state.user.next
+            this.percent2 = (this.score/this.full_score)*100
           }
           this.setHeight()
           this._initBScroll()

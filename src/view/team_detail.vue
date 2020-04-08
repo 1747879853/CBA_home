@@ -1,22 +1,22 @@
 <template>
   <div>
-    <x-header :left-options="{backText: '',preventGoBack: true}" style="background-color:#2d2d2d;"@on-click-back="return_team_detail()">广东队
+    <x-header :left-options="{backText: '',preventGoBack: true}" style="background-color:#2d2d2d;"@on-click-back="return_team_detail()">{{team}}
       <img src="/static/guanzhu.png" slot="right" style="width: 20px;" v-if="guznhu_flag">
       <span slot="right" v-if="!guznhu_flag">已关注</span>
     </x-header>
     <div>
       <div class="background_top2" >
-            <img src="/static/tim/3.png" style="width: 50px;position: absolute;left: 25px;top: 35px;">
-            <span style="position: absolute;top: 24px;left: 105px;color: white;">战绩：28胜2负 排名第1</span>
-            <span style="position: absolute;top: 68px;left: 105px;color: white;">主场：东莞银行篮球中心</span>
+            <img :src="res.img" style="width: 50px;position: absolute;left: 25px;top: 35px;">
+            <span style="position: absolute;top: 24px;left: 105px;color: white;">战绩：{{res.战绩}}</span>
+            <span style="position: absolute;top: 68px;left: 105px;color: white;">主场：{{res.主场}}</span>
         </div>
         <div class="content" >
           <tab class="content_tab" default-color="#888888" active-color="#000000" bar-active-color="#DD0000">
             <tab-item  @on-item-click="onItemClick_dongtai()" :selected="show_dongtai">动态</tab-item>
             <tab-item  @on-item-click="onItemClick_match()" :selected="show_match">赛程</tab-item>
             <tab-item @on-item-click="onItemClick_player()" :selected="show_player">球员</tab-item>
-            <tab-item @on-item-click="onItemClick_info()" :selected="show_info">资料</tab-item>
-            <tab-item @on-item-click="onItemClick_dataTeam()" :selected="show_dataTeam">数据</tab-item>
+            
+            
           </tab>
           <div v-show="show_dongtai" style="background-color:white;">
             <div class="newpage">
@@ -115,29 +115,28 @@
             </div>
           </div>
           <div v-show="show_player" style="background-color:white;">
-            <van-row>
-                <van-col span="4"><p style="padding-top: 11px;padding-left: 21px;">球员</p></van-col>
-                <van-col span="8"></van-col>
-                <van-col span="8"><p style="padding-top: 11px;">位置</p></van-col>
-                <van-col span="4"><p style="padding-top: 11px;">场均得分</p></van-col>
-              </van-row>
-            <div style="width: 95%;margin: 0 auto;height: 80px;margin-top: 5px;" v-for="item in 10">
+           
               <van-row>
-                <van-col span="4"><img src="/static/man.jpg" style="width: 50px;"></van-col>
-                <van-col span="8"><p st>易建联</p><p>9号</p></van-col>
-                <van-col span="10"><p style="padding-top: 11px;">中锋</p></van-col>
-                <van-col span="2"><p style="padding-top: 11px;">26</p></van-col>
+                <van-col span="4"><p style="padding-top: 11px;padding-left: 21px;">球员</p></van-col>
+                <van-col span="4"></van-col>
+                <van-col span="8"><p style="padding-top: 11px;">位置</p></van-col>
+                <van-col span="8"><p style="padding-top: 11px;">场均得分</p></van-col>
+              </van-row>
+            <div style="width: 95%;margin: 0 auto;height: 80px;margin-top: 5px;" >
+              <van-row v-for="(item,index) in res.球员" :key="index"> 
+                <van-col span="4"><img :src="item.img" style="width: 50px;"></van-col>
+                <van-col span="8"><p >{{item.name}}</p><p>{{item.number}}号</p></van-col>
+                <van-col span="10"><p style="padding-top: 11px;">{{item.place}}</p></van-col>
+                <van-col span="2"><p style="padding-top: 11px;">{{26+index}}</p></van-col>
               </van-row>
               <van-divider />
+          
+            
               <span></span>
             </div>
           </div>
-          <div v-show="show_info">
-            222
-          </div>
-          <div v-show="show_dataTeam">
-            222
-          </div>
+          
+          
         </div>
     </div>
   </div>
@@ -157,6 +156,8 @@
 <script>
 import BScroll from 'better-scroll'
 import { XHeader, Tab, TabItem,} from 'vux'
+import { mapMutations } from 'vuex' 
+import {get_team_data } from '@/api/user.js'
 export default{
    components: {
     XHeader,
@@ -169,176 +170,91 @@ export default{
         show_dongtai: false,
         show_match: false,
         show_player: false,
-        show_info: false,
-        show_dataTeam: false,
+       
+        res:null,
+
+        team:'',
         finished:'',
         loading:'',
         newpage:[
-          {
-            'img': "http://47.94.93.50:8080/newsimg/10.jpg",
-            'dianzan': 5288,
-            'author':  "蒂姆关古威",
-            'pinglun': 173,
-            'match_id':  "刘航初空砍25分，八一主场惜败于天津",
-            'title': "刘航初空砍25分，八一主场惜败于天津"
-          },
-          {
-            'img': "http://47.94.93.50:8080/newsimg/10.jpg",
-            'dianzan': 5288,
-            'author':  "蒂姆关古威",
-            'pinglun': 173,
-            'match_id':  "刘航初空砍25分，八一主场惜败于天津",
-            'title': "刘航初空砍25分，八一主场惜败于天津"
-          },
-          {
-            'img': "http://47.94.93.50:8080/newsimg/10.jpg",
-            'dianzan': 5288,
-            'author':  "蒂姆关古威",
-            'pinglun': 173,
-            'match_id':  "刘航初空砍25分，八一主场惜败于天津",
-            'title': "刘航初空砍25分，八一主场惜败于天津"
-          },
-          {
-            'img': "http://47.94.93.50:8080/newsimg/10.jpg",
-            'dianzan': 5288,
-            'author':  "蒂姆关古威",
-            'pinglun': 173,
-            'match_id':  "刘航初空砍25分，八一主场惜败于天津",
-            'title': "刘航初空砍25分，八一主场惜败于天津"
-          },
-          {
-            'img': "http://47.94.93.50:8080/newsimg/10.jpg",
-            'dianzan': 5288,
-            'author':  "蒂姆关古威",
-            'pinglun': 173,
-            'match_id':  "刘航初空砍25分，八一主场惜败于天津",
-            'title': "刘航初空砍25分，八一主场惜败于天津"
-          },
-
+          
         ],
         all_list:[
-          {
-            'time':  "2月18日  星期二",
-            'match_list':[
-              {
-                'p': "-",
-                'score': 0,
-                'img': "http://47.94.93.50:8080//sign/上海大鲨鱼.png",
-                'p2':  "-",
-                'score2':  0,
-                'match_id':  "37*上海大鲨鱼",
-                'name':  "上海",
-                'message': "19:35",
-                'name2': "福建",
-                'img2':  "http://47.94.93.50:8080//sign/福建中华鲟.png",
-                'message2':  "常规赛第37轮",
-              }
-            ]
-          },
-          {
-            'time':  "2月18日  星期二",
-            'match_list':[
-              {
-                'p': "-",
-                'score': 0,
-                'img': "http://47.94.93.50:8080//sign/上海大鲨鱼.png",
-                'p2':  "-",
-                'score2':  0,
-                'match_id':  "37*上海大鲨鱼",
-                'name':  "上海",
-                'message': "19:35",
-                'name2': "福建",
-                'img2':  "http://47.94.93.50:8080//sign/福建中华鲟.png",
-                'message2':  "常规赛第37轮",
-              }
-            ]
-          },
-          {
-            'time':  "2月18日  星期二",
-            'match_list':[
-              {
-                'p': "-",
-                'score': 0,
-                'img': "http://47.94.93.50:8080//sign/上海大鲨鱼.png",
-                'p2':  "-",
-                'score2':  0,
-                'match_id':  "37*上海大鲨鱼",
-                'name':  "上海",
-                'message': "19:35",
-                'name2': "福建",
-                'img2':  "http://47.94.93.50:8080//sign/福建中华鲟.png",
-                'message2':  "常规赛第37轮",
-              }
-            ]
-          },
-          {
-            'time':  "2月18日  星期二",
-            'match_list':[
-              {
-                'p': "-",
-                'score': 0,
-                'img': "http://47.94.93.50:8080//sign/上海大鲨鱼.png",
-                'p2':  "-",
-                'score2':  0,
-                'match_id':  "37*上海大鲨鱼",
-                'name':  "上海",
-                'message': "19:35",
-                'name2': "福建",
-                'img2':  "http://47.94.93.50:8080//sign/福建中华鲟.png",
-                'message2':  "常规赛第37轮",
-              }
-            ]
-          },
+          
 
         ]
         }
     },
     methods: {
+      ...mapMutations(['sethomeIndex']),
       return_team_detail() {
         this.sethomeIndex(2)
         this.$router.push({name:"home"})
       },
       onItemClick_match() {
         this.show_match = true
-        this.show_info = false
+       
         this.show_player = false
-        this.show_dataTeam = false
+        
         this.show_dongtai = false
       },
       onItemClick_dongtai() {
         this.show_dongtai = true
         this.show_match = false
-        this.show_info = false
+        
         this.show_player = false
-        this.show_dataTeam = false
+        
         
       },
       onItemClick_player() {
         this.show_match = false
-        this.show_info = false
+        
         this.show_player = true
-        this.show_dataTeam = false
+       
         this.show_dongtai = false
       },
-      onItemClick_info() {
-        this.show_match = false
-        this.show_info = true
-        this.show_player = false
-        this.show_dataTeam = false
-        this.show_dongtai = false
-      },
-      onItemClick_dataTeam() {
-        this.show_match = false
-        this.show_info = false
-        this.show_player = false
-        this.show_dataTeam = true
-        this.show_dongtai = false
-      },
+     
+      
       set_show_flag(tag_flag) {
 
       }
     },
    mounted() { 
+    this.team = this.$store.state.user.team
+    console.log(this.$store.state.user.team)
+    get_team_data(this.$store.state.user.team)
+    .then(res => {
+      //console.log(res.data)
+      this.res = res.data
+      this.newpage = res.data.动态
+      for(let i = 0;i < res.data.赛程.length;i++){
+        this.all_list.push(
+        {
+            'time':  res.data.赛程[i].time,
+            'match_list':[
+              {
+                'p': "-",
+                'score': res.data.赛程[i].match_list[0].major_score,
+                'img': res.data.赛程[i].match_list[0].major_img,
+                'p2':  "-",
+                'score2':  res.data.赛程[i].match_list[0].unmajor_score,
+                'match_id':  "37*上海大鲨鱼",
+                'name':  res.data.赛程[i].match_list[0].major,
+                'message': "19:35",
+                'name2': res.data.赛程[i].match_list[0].unmajor,
+                'img2':  res.data.赛程[i].match_list[0].unmajor_img,
+                'message2':  "常规赛第37轮",
+              }
+            ]
+          },
+        )
+      }
+      
+      
+    })
+    .catch(err => {
+      console.log(err)
+    })
     this.$nextTick(()  =>  {
     })
   }
